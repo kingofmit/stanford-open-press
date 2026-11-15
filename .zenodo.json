@@ -1,0 +1,42 @@
+{
+  "title": "Stanford Open Press: Modern AI-Powered Scholarly Publishing Platform",
+  "description": "The modern, AI-powered scholarly publishing platform. Beautiful journals, frictionless peer review, and intelligent editorial workflows — built for the future of open science.",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Allem, Ahmed",
+      "orcid": "0009-0003-4937-5858"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "scholarly-publishing",
+    "open-access",
+    "peer-review",
+    "journal-management",
+    "editorial-workflow",
+    "ai-powered",
+    "typescript",
+    "open-science"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/kingofmit/stanford-open-press",
+      "relation": "isSupplementTo",
+      "resource_type": "software",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/kingofmit/allem-ui",
+      "relation": "isRelatedTo",
+      "resource_type": "software",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/kingofmit/allem-sdk",
+      "relation": "isRelatedTo",
+      "resource_type": "software",
+      "scheme": "url"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "name": "@stanford-press/core",
+  "version": "0.1.0",
+  "description": "Journal configuration, multi-journal support, role system, permissions, and workflow event system for Stanford Open Press.",
+  "license": "MIT",
+  "author": "Ahmed Allem",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kingofmit/stanford-open-press.git",
+    "directory": "packages/core"
+  },
+  "keywords": [
+    "stanford-open-press",
+    "scholarly-publishing",
+    "journal",
+    "roles",
+    "permissions",
+    "workflow",
+    "typescript"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

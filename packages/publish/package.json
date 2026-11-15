@@ -1,0 +1,54 @@
+{
+  "name": "@stanford-press/publish",
+  "version": "0.1.0",
+  "description": "DOI registration, JATS XML generation, citation export, issue management, and OAI-PMH for Stanford Open Press.",
+  "license": "MIT",
+  "author": "Ahmed Allem",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@stanford-press/core": "workspace:*"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kingofmit/stanford-open-press.git",
+    "directory": "packages/publish"
+  },
+  "keywords": [
+    "stanford-open-press",
+    "doi",
+    "crossref",
+    "datacite",
+    "jats-xml",
+    "citation",
+    "oai-pmh",
+    "scholarly-publishing",
+    "typescript"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
