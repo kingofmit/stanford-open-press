@@ -28,3 +28,6 @@ export {
 
 // Importer
 export { OJSImporter } from "./importer";
+
+// Migrator (CLI engine)
+export { OJSMigrator } from "./migrator";

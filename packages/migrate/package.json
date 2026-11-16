@@ -4,6 +4,9 @@
   "description": "OJS 3.x database importer with migration planning, data mapping, reporting, and rollback support for Stanford Open Press.",
   "license": "MIT",
   "author": "Ahmed Allem",
+  "bin": {
+    "stanford-press-migrate": "./dist/cli.js"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -25,9 +28,11 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@stanford-press/core": "workspace:*"
+    "@stanford-press/core": "workspace:*",
+    "mysql2": "^3.11.0"
   },
   "devDependencies": {
+    "@types/node": "^22.0.0",
     "tsup": "^8.4.0",
     "typescript": "^5.8.0",
     "vitest": "^3.0.0"

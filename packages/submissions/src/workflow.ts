@@ -1,5 +1,6 @@
 import { SubmissionStatus } from "./types";
-import type { StatusTransition, ID } from "./types";
+import type { StatusTransition } from "./types";
+import type { ID } from "@stanford-press/core";
 
 /**
  * Valid state transitions for the submission workflow.
