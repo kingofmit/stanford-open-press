@@ -57,6 +57,9 @@ export default async function JournalLayout({
             <Link href={`/${journal.slug}/issues`} className="text-white/70 hover:text-white transition-colors">
               Archives
             </Link>
+            <Link href={`/${journal.slug}/search`} className="text-white/70 hover:text-white transition-colors">
+              Search
+            </Link>
             <Link href={`/${journal.slug}/about`} className="text-white/70 hover:text-white transition-colors">
               About
             </Link>
