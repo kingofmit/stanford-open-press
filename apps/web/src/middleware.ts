@@ -1,18 +1,34 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { auth } from "@/lib/auth";
 
-async function middleware(request: NextRequest) {
-  const session = await auth();
-  const isLoggedIn = !!session?.user;
+/**
+ * Lightweight middleware that checks for session cookie presence.
+ * Full auth validation happens in page/API route server components via auth().
+ * This avoids Prisma in Edge runtime.
+ */
+export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const isAuthPage = pathname.startsWith("/login") || pathname.startsWith("/register");
-  const isProtectedRoute = pathname.startsWith("/dashboard") || pathname.startsWith("/editorial");
+  // Check for session cookie (NextAuth v5 uses authjs.session-token)
+  const sessionCookie =
+    request.cookies.get("authjs.session-token") ||
+    request.cookies.get("next-auth.session-token") ||
+    request.cookies.get("__Secure-authjs.session-token");
 
+  const isLoggedIn = !!sessionCookie?.value;
+
+  const isAuthPage = pathname.startsWith("/login") || pathname.startsWith("/register");
+  const isProtectedRoute =
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/editorial") ||
+    pathname.startsWith("/profile") ||
+    pathname.startsWith("/submissions");
+
+  // Redirect logged-in users away from auth pages
   if (isAuthPage && isLoggedIn) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
+  // Redirect unauthenticated users to login
   if (isProtectedRoute && !isLoggedIn) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
@@ -20,8 +36,6 @@ async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-export default middleware;
-
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|api).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|api|.*\\..*).*)"],
 };
