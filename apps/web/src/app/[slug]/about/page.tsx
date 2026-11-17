@@ -12,7 +12,7 @@ export default async function AboutPage({ params }: Params) {
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-10">
-      <h1 className="text-2xl font-heading font-bold text-navy-950 mb-6">About {journal.name}</h1>
+      <h1 className="text-2xl font-heading font-bold text-cardinal mb-6">About {journal.name}</h1>
 
       {journal.description && (
         <section className="mb-8">
@@ -22,7 +22,7 @@ export default async function AboutPage({ params }: Params) {
 
       <section className="space-y-6">
         <div>
-          <h2 className="text-lg font-heading font-semibold text-navy-950 mb-2">Peer Review Policy</h2>
+          <h2 className="text-lg font-heading font-semibold text-cardinal mb-2">Peer Review Policy</h2>
           <p className="text-sm text-gray-600">
             This journal uses <strong>{journal.peerReviewType.replace("-", " ")}</strong> peer review.
             All submitted manuscripts are evaluated by at least two independent reviewers.
@@ -30,9 +30,18 @@ export default async function AboutPage({ params }: Params) {
         </div>
 
         <div>
-          <h2 className="text-lg font-heading font-semibold text-navy-950 mb-2">Open Access</h2>
+          <h2 className="text-lg font-heading font-semibold text-cardinal mb-2">Open Access</h2>
           <p className="text-sm text-gray-600">
-            All articles are published under a <strong>{journal.licenseType}</strong> license.
+            All articles are published under a{" "}
+            <a
+              href={`https://creativecommons.org/licenses/${journal.licenseType.replace("CC-", "").toLowerCase()}/4.0/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-digital-red hover:text-cardinal underline"
+            >
+              {journal.licenseType}
+            </a>{" "}
+            license.
             {journal.copyrightPolicy === "author-retains" && " Authors retain copyright of their work."}
           </p>
           {(journal.apcAmount ?? 0) > 0 ? (
@@ -48,7 +57,7 @@ export default async function AboutPage({ params }: Params) {
 
         {journal.issn && (
           <div>
-            <h2 className="text-lg font-heading font-semibold text-navy-950 mb-2">Identifiers</h2>
+            <h2 className="text-lg font-heading font-semibold text-cardinal mb-2">Identifiers</h2>
             <p className="text-sm text-gray-600">
               ISSN: {journal.issn}
               {journal.eissn && ` | eISSN: ${journal.eissn}`}

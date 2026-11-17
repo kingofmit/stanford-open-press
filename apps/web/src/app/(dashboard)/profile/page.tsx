@@ -1,7 +1,9 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { prisma } from "@stanford-press/database";
 import { ProfileForm } from "./profile-form";
+import { StanfordBar } from "@/components/app-header";
 
 export const metadata = { title: "My Profile" };
 
@@ -32,9 +34,11 @@ export default async function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <StanfordBar />
       <header className="border-b bg-white">
         <div className="mx-auto max-w-3xl px-6 py-4">
-          <h1 className="text-lg font-heading font-bold text-navy-950">My Profile</h1>
+          <Link href="/dashboard" className="text-sm text-cool-grey hover:text-cardinal transition-colors">&larr; Back to Dashboard</Link>
+          <h1 className="text-lg font-heading font-bold text-cardinal">My Profile</h1>
         </div>
       </header>
       <main className="mx-auto max-w-3xl px-6 py-8">

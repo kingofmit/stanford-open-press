@@ -69,7 +69,7 @@ export function ProfileForm({ user }: { user: UserData }) {
 
       {/* Account info (read-only) */}
       <section className="rounded-xl border bg-white p-6">
-        <h2 className="text-lg font-heading font-semibold text-navy-950 mb-4">Account</h2>
+        <h2 className="text-lg font-heading font-semibold text-cardinal mb-4">Account</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <p className="text-xs text-gray-500">Email</p>
@@ -90,7 +90,7 @@ export function ProfileForm({ user }: { user: UserData }) {
 
       {/* Editable profile */}
       <section className="rounded-xl border bg-white p-6">
-        <h2 className="text-lg font-heading font-semibold text-navy-950 mb-4">Profile</h2>
+        <h2 className="text-lg font-heading font-semibold text-cardinal mb-4">Profile</h2>
         <div className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
@@ -99,7 +99,7 @@ export function ProfileForm({ user }: { user: UserData }) {
               type="text"
               value={name}
               onChange={(e) => { setName(e.target.value); setSaved(false); }}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
             />
           </div>
           <div>
@@ -110,7 +110,7 @@ export function ProfileForm({ user }: { user: UserData }) {
               value={affiliation}
               onChange={(e) => { setAffiliation(e.target.value); setSaved(false); }}
               placeholder="Stanford University"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
             />
           </div>
           <div>
@@ -121,7 +121,7 @@ export function ProfileForm({ user }: { user: UserData }) {
               onChange={(e) => { setBio(e.target.value); setSaved(false); }}
               rows={3}
               placeholder="Brief professional biography..."
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
             />
           </div>
         </div>
@@ -129,7 +129,7 @@ export function ProfileForm({ user }: { user: UserData }) {
 
       {/* Reviewer profile */}
       <section className="rounded-xl border bg-white p-6">
-        <h2 className="text-lg font-heading font-semibold text-navy-950 mb-4">Reviewer Profile</h2>
+        <h2 className="text-lg font-heading font-semibold text-cardinal mb-4">Reviewer Profile</h2>
         <div className="space-y-4">
           <div>
             <label htmlFor="expertise" className="block text-sm font-medium text-gray-700 mb-1">
@@ -141,7 +141,7 @@ export function ProfileForm({ user }: { user: UserData }) {
               value={expertiseAreas}
               onChange={(e) => { setExpertiseAreas(e.target.value); setSaved(false); }}
               placeholder="machine learning, computational biology, NLP"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
             />
           </div>
           <div>
@@ -151,7 +151,7 @@ export function ProfileForm({ user }: { user: UserData }) {
                 type="checkbox"
                 checked={reviewerAvailable}
                 onChange={(e) => { setReviewerAvailable(e.target.checked); setSaved(false); }}
-                className="h-4 w-4 accent-brand-500"
+                className="h-4 w-4 accent-digital-red"
               />
               <span className="text-sm text-gray-700">Available for review requests</span>
             </label>
@@ -162,23 +162,23 @@ export function ProfileForm({ user }: { user: UserData }) {
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 pt-4 border-t">
               <div>
                 <p className="text-xs text-gray-500">Reviews Completed</p>
-                <p className="text-lg font-heading font-bold text-navy-950">{user.totalCompleted}</p>
+                <p className="text-lg font-heading font-bold text-cardinal">{user.totalCompleted}</p>
               </div>
               <div>
                 <p className="text-xs text-gray-500">Avg Response</p>
-                <p className="text-lg font-heading font-bold text-navy-950">
+                <p className="text-lg font-heading font-bold text-cardinal">
                   {user.avgResponseDays ? `${Math.round(user.avgResponseDays)}d` : "\u2014"}
                 </p>
               </div>
               <div>
                 <p className="text-xs text-gray-500">Quality Score</p>
-                <p className="text-lg font-heading font-bold text-navy-950">
+                <p className="text-lg font-heading font-bold text-cardinal">
                   {user.qualityScore ? Math.round(user.qualityScore) : "\u2014"}
                 </p>
               </div>
               <div>
                 <p className="text-xs text-gray-500">Accept Rate</p>
-                <p className="text-lg font-heading font-bold text-navy-950">
+                <p className="text-lg font-heading font-bold text-cardinal">
                   {user.totalCompleted + user.totalDeclined > 0
                     ? `${Math.round((user.totalCompleted / (user.totalCompleted + user.totalDeclined)) * 100)}%`
                     : "\u2014"}
@@ -191,7 +191,7 @@ export function ProfileForm({ user }: { user: UserData }) {
 
       {/* Save */}
       <div className="flex items-center justify-between">
-        <Link href="/dashboard" className="text-sm text-gray-500 hover:text-navy-950">
+        <Link href="/dashboard" className="text-sm text-gray-500 hover:text-cardinal">
           &larr; Back to Dashboard
         </Link>
         <div className="flex items-center gap-3">
@@ -199,7 +199,7 @@ export function ProfileForm({ user }: { user: UserData }) {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors"
+            className="rounded-lg bg-digital-red px-6 py-2.5 text-sm font-medium text-white hover:bg-cardinal disabled:opacity-50 transition-colors"
           >
             {saving ? "Saving..." : "Save Profile"}
           </button>

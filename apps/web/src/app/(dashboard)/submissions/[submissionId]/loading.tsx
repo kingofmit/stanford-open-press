@@ -1,6 +1,9 @@
+import { StanfordBar } from "@/components/app-header";
+
 export default function SubmissionDetailLoading() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <StanfordBar />
       <header className="border-b bg-white">
         <div className="mx-auto max-w-4xl px-6 py-4">
           <div className="h-4 w-32 animate-pulse rounded bg-gray-200" />

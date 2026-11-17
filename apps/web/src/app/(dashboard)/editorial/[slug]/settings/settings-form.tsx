@@ -79,40 +79,40 @@ export function JournalSettingsForm({ journal, slug }: { journal: Journal; slug:
 
       {/* General */}
       <section className="rounded-xl border bg-white p-6">
-        <h2 className="text-lg font-heading font-semibold text-navy-950 mb-4">General</h2>
+        <h2 className="text-lg font-heading font-semibold text-cardinal mb-4">General</h2>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Journal Name</label>
             <input type="text" value={form.name} onChange={(e) => update("name", e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none" />
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Abbreviation</label>
               <input type="text" value={form.abbreviation} onChange={(e) => update("abbreviation", e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none" />
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">DOI Prefix</label>
               <input type="text" value={form.doiPrefix} onChange={(e) => update("doiPrefix", e.target.value)}
-                placeholder="10.xxxxx" className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none" />
+                placeholder="10.xxxxx" className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none" />
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
             <textarea value={form.description} onChange={(e) => update("description", e.target.value)} rows={4}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none" />
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Print ISSN</label>
               <input type="text" value={form.issn} onChange={(e) => update("issn", e.target.value)}
-                placeholder="1234-5678" className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none" />
+                placeholder="1234-5678" className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Electronic ISSN</label>
               <input type="text" value={form.eissn} onChange={(e) => update("eissn", e.target.value)}
-                placeholder="1234-5678" className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none" />
+                placeholder="1234-5678" className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none" />
             </div>
           </div>
         </div>
@@ -120,12 +120,12 @@ export function JournalSettingsForm({ journal, slug }: { journal: Journal; slug:
 
       {/* Policies */}
       <section className="rounded-xl border bg-white p-6">
-        <h2 className="text-lg font-heading font-semibold text-navy-950 mb-4">Policies</h2>
+        <h2 className="text-lg font-heading font-semibold text-cardinal mb-4">Policies</h2>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Peer Review Type</label>
             <select value={form.peerReviewType} onChange={(e) => update("peerReviewType", e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none">
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none">
               <option value="double-blind">Double Blind</option>
               <option value="single-blind">Single Blind</option>
               <option value="open">Open Review</option>
@@ -134,7 +134,7 @@ export function JournalSettingsForm({ journal, slug }: { journal: Journal; slug:
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">License</label>
             <select value={form.licenseType} onChange={(e) => update("licenseType", e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none">
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none">
               <option value="CC-BY-4.0">CC BY 4.0</option>
               <option value="CC-BY-SA-4.0">CC BY-SA 4.0</option>
               <option value="CC-BY-NC-4.0">CC BY-NC 4.0</option>
@@ -145,7 +145,7 @@ export function JournalSettingsForm({ journal, slug }: { journal: Journal; slug:
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Copyright Policy</label>
             <select value={form.copyrightPolicy} onChange={(e) => update("copyrightPolicy", e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none">
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none">
               <option value="author-retains">Authors retain copyright</option>
               <option value="journal-owns">Journal owns copyright</option>
               <option value="shared">Shared copyright</option>
@@ -156,7 +156,7 @@ export function JournalSettingsForm({ journal, slug }: { journal: Journal; slug:
 
       {/* Theme */}
       <section className="rounded-xl border bg-white p-6">
-        <h2 className="text-lg font-heading font-semibold text-navy-950 mb-4">Theme</h2>
+        <h2 className="text-lg font-heading font-semibold text-cardinal mb-4">Theme</h2>
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -165,7 +165,7 @@ export function JournalSettingsForm({ journal, slug }: { journal: Journal; slug:
                 <input type="color" value={form.primaryColor} onChange={(e) => update("primaryColor", e.target.value)}
                   className="h-10 w-10 rounded border cursor-pointer" />
                 <input type="text" value={form.primaryColor} onChange={(e) => update("primaryColor", e.target.value)}
-                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm font-mono focus:border-brand-500 focus:outline-none" />
+                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm font-mono focus:border-digital-red focus:outline-none" />
               </div>
             </div>
             <div>
@@ -174,7 +174,7 @@ export function JournalSettingsForm({ journal, slug }: { journal: Journal; slug:
                 <input type="color" value={form.accentColor} onChange={(e) => update("accentColor", e.target.value)}
                   className="h-10 w-10 rounded border cursor-pointer" />
                 <input type="text" value={form.accentColor} onChange={(e) => update("accentColor", e.target.value)}
-                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm font-mono focus:border-brand-500 focus:outline-none" />
+                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm font-mono focus:border-digital-red focus:outline-none" />
               </div>
             </div>
           </div>
@@ -182,7 +182,7 @@ export function JournalSettingsForm({ journal, slug }: { journal: Journal; slug:
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Heading Font</label>
               <select value={form.headingFont} onChange={(e) => update("headingFont", e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none">
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none">
                 <option value="Inter">Inter</option>
                 <option value="Georgia">Georgia</option>
                 <option value="Merriweather">Merriweather</option>
@@ -193,7 +193,7 @@ export function JournalSettingsForm({ journal, slug }: { journal: Journal; slug:
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Body Font</label>
               <select value={form.bodyFont} onChange={(e) => update("bodyFont", e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none">
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none">
                 <option value="Source Serif Pro">Source Serif Pro</option>
                 <option value="Georgia">Georgia</option>
                 <option value="Lora">Lora</option>
@@ -225,7 +225,7 @@ export function JournalSettingsForm({ journal, slug }: { journal: Journal; slug:
         <button
           onClick={handleSave}
           disabled={saving}
-          className="rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors"
+          className="rounded-lg bg-digital-red px-6 py-2.5 text-sm font-medium text-white hover:bg-cardinal disabled:opacity-50 transition-colors"
         >
           {saving ? "Saving..." : "Save Settings"}
         </button>

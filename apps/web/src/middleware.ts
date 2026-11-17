@@ -16,7 +16,11 @@ export default function middleware(request: NextRequest) {
 
   const isLoggedIn = !!sessionCookie?.value;
 
-  const isAuthPage = pathname.startsWith("/login") || pathname.startsWith("/register");
+  // Allow /login/error and /login/verify even when logged in
+  const isAuthPage =
+    (pathname.startsWith("/login") || pathname.startsWith("/register")) &&
+    !pathname.startsWith("/login/error") &&
+    !pathname.startsWith("/login/verify");
   const isProtectedRoute =
     pathname.startsWith("/dashboard") ||
     pathname.startsWith("/editorial") ||

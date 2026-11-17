@@ -123,7 +123,7 @@ export function ReviewFormClient({
       {/* Criteria scoring */}
       {criteria.length > 0 && (
         <div className="rounded-xl border bg-white p-6">
-          <h2 className="text-lg font-heading font-semibold text-navy-950 mb-4">Evaluation Criteria</h2>
+          <h2 className="text-lg font-heading font-semibold text-cardinal mb-4">Evaluation Criteria</h2>
           <div className="space-y-6">
             {criteria.map((c) => (
               <div key={c.id} className="border-b border-gray-100 pb-4 last:border-0">
@@ -145,7 +145,7 @@ export function ReviewFormClient({
                       onClick={() => updateScore(c.id, val)}
                       className={`h-9 w-9 rounded-lg text-sm font-medium transition-colors ${
                         scores[c.id]?.score === val
-                          ? "bg-brand-500 text-white"
+                          ? "bg-digital-red text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                       }`}
                     >
@@ -161,7 +161,7 @@ export function ReviewFormClient({
                   placeholder={`Comment on ${c.label.toLowerCase()} (optional)`}
                   value={scores[c.id]?.comment || ""}
                   onChange={(e) => updateComment(c.id, e.target.value)}
-                  className="w-full rounded-lg border border-gray-200 px-3 py-1.5 text-sm focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-lg border border-gray-200 px-3 py-1.5 text-sm focus:border-digital-red focus:outline-none"
                 />
               </div>
             ))}
@@ -171,7 +171,7 @@ export function ReviewFormClient({
 
       {/* Comments */}
       <div className="rounded-xl border bg-white p-6">
-        <h2 className="text-lg font-heading font-semibold text-navy-950 mb-4">Comments</h2>
+        <h2 className="text-lg font-heading font-semibold text-cardinal mb-4">Comments</h2>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -183,7 +183,7 @@ export function ReviewFormClient({
               onChange={(e) => setCommentsToAuthor(e.target.value)}
               rows={8}
               placeholder="Provide constructive feedback on the manuscript..."
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none focus:ring-1 focus:ring-digital-red"
             />
           </div>
           <div>
@@ -196,7 +196,7 @@ export function ReviewFormClient({
               onChange={(e) => setCommentsToEditor(e.target.value)}
               rows={4}
               placeholder="Any confidential remarks for the editor..."
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none focus:ring-1 focus:ring-digital-red"
             />
           </div>
         </div>
@@ -204,7 +204,7 @@ export function ReviewFormClient({
 
       {/* Recommendation */}
       <div className="rounded-xl border bg-white p-6">
-        <h2 className="text-lg font-heading font-semibold text-navy-950 mb-4">
+        <h2 className="text-lg font-heading font-semibold text-cardinal mb-4">
           Recommendation <span className="text-red-500">*</span>
         </h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -234,7 +234,7 @@ export function ReviewFormClient({
         <button
           onClick={handleSubmit}
           disabled={submitting}
-          className="rounded-lg bg-brand-500 px-8 py-3 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors"
+          className="rounded-lg bg-digital-red px-8 py-3 text-sm font-medium text-white hover:bg-cardinal disabled:opacity-50 transition-colors"
         >
           {submitting ? "Submitting..." : "Submit Review"}
         </button>

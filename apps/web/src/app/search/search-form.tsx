@@ -40,7 +40,7 @@ export function GlobalSearchForm({
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search by title, abstract, keyword, or author..."
         aria-label="Search articles"
-        className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+        className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-digital-red focus:outline-none focus:ring-1 focus:ring-digital-red"
       />
       <label htmlFor="journal-filter" className="sr-only">Filter by journal</label>
       <select
@@ -57,7 +57,7 @@ export function GlobalSearchForm({
       </select>
       <button
         type="submit"
-        className="rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
+        className="rounded-lg bg-digital-red px-6 py-2.5 text-sm font-medium text-white hover:bg-cardinal transition-colors"
       >
         Search
       </button>

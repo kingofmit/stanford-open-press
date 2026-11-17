@@ -65,7 +65,7 @@ export function DecisionForm({ submissionId, slug, currentStatus, reviewSummary 
 
   return (
     <div className="rounded-xl border-2 border-purple-200 bg-purple-50 p-6">
-      <h2 className="text-lg font-heading font-semibold text-navy-950 mb-2">Make Decision</h2>
+      <h2 className="text-lg font-heading font-semibold text-cardinal mb-2">Make Decision</h2>
 
       {/* Reviewer summary */}
       {Object.keys(recCounts).length > 0 && (
@@ -115,7 +115,7 @@ export function DecisionForm({ submissionId, slug, currentStatus, reviewSummary 
             onChange={(e) => setRevisionDays(parseInt(e.target.value) || 30)}
             min={7}
             max={180}
-            className="w-32 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+            className="w-32 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
           />
         </div>
       )}
@@ -129,7 +129,7 @@ export function DecisionForm({ submissionId, slug, currentStatus, reviewSummary 
             onChange={(e) => setCommentsToAuthor(e.target.value)}
             rows={6}
             placeholder="Dear Author, based on the reviews received..."
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
           />
         </div>
         <div>
@@ -139,7 +139,7 @@ export function DecisionForm({ submissionId, slug, currentStatus, reviewSummary 
             onChange={(e) => setInternalNotes(e.target.value)}
             rows={3}
             placeholder="Any notes for the editorial team..."
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
           />
         </div>
       </div>
@@ -147,7 +147,7 @@ export function DecisionForm({ submissionId, slug, currentStatus, reviewSummary 
       <button
         onClick={handleSubmit}
         disabled={submitting || !decision}
-        className="rounded-lg bg-navy-950 px-6 py-2.5 text-sm font-medium text-white hover:bg-navy-900 disabled:opacity-50 transition-colors"
+        className="rounded-lg bg-cardinal px-6 py-2.5 text-sm font-medium text-white hover:bg-cardinal disabled:opacity-50 transition-colors"
       >
         {submitting ? "Recording..." : "Record Decision"}
       </button>

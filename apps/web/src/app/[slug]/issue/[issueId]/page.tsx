@@ -45,10 +45,10 @@ export default async function IssuePage({ params }: Params) {
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
       <div className="mb-8">
-        <Link href={`/${slug}/issues`} className="text-sm text-gray-500 hover:text-navy-950 transition-colors">
+        <Link href={`/${slug}/issues`} className="text-sm text-gray-500 hover:text-cardinal transition-colors">
           &larr; All Issues
         </Link>
-        <h1 className="text-2xl font-heading font-bold text-navy-950 mt-2">
+        <h1 className="text-2xl font-heading font-bold text-cardinal mt-2">
           {issue.volume ? `Volume ${issue.volume.number}, ` : ""}Issue {issue.number}
           {issue.title ? `: ${issue.title}` : ""}
         </h1>
@@ -69,7 +69,7 @@ export default async function IssuePage({ params }: Params) {
           {articles.map((article: any) => (
             <article key={article.id} className="border-b border-gray-100 pb-6 last:border-0">
               <Link href={`/${slug}/article/${article.id}`} className="group">
-                <h3 className="text-lg font-heading font-semibold text-navy-950 group-hover:text-brand-500 transition-colors">
+                <h3 className="text-lg font-heading font-semibold text-cardinal group-hover:text-digital-red transition-colors">
                   {article.title}
                 </h3>
               </Link>
@@ -81,7 +81,7 @@ export default async function IssuePage({ params }: Params) {
                   <span>pp. {article.firstPage}{article.lastPage ? `\u2013${article.lastPage}` : ""}</span>
                 )}
                 {article.doi && (
-                  <a href={`https://doi.org/${article.doi}`} target="_blank" rel="noopener noreferrer" className="hover:text-brand-500">
+                  <a href={`https://doi.org/${article.doi}`} target="_blank" rel="noopener noreferrer" className="hover:text-digital-red">
                     {article.doi}
                   </a>
                 )}

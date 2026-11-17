@@ -4,6 +4,7 @@ import { prisma } from "@stanford-press/database";
 import Link from "next/link";
 import { StatusBadge } from "@/components/status-badge";
 import { ProductionClient } from "./production-client";
+import { StanfordBar } from "@/components/app-header";
 
 export const metadata = { title: "Production Pipeline" };
 
@@ -57,12 +58,13 @@ export default async function ProductionPage({ params }: Params) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <StanfordBar />
       <header className="border-b bg-white">
         <div className="mx-auto max-w-5xl px-6 py-4">
-          <Link href={`/editorial/${slug}/submissions/${submissionId}`} className="text-sm text-gray-500 hover:text-navy-950">
+          <Link href={`/editorial/${slug}/submissions/${submissionId}`} className="text-sm text-gray-500 hover:text-cardinal">
             &larr; Back to Submission
           </Link>
-          <h1 className="text-lg font-heading font-bold text-navy-950 mt-1">Production Pipeline</h1>
+          <h1 className="text-lg font-heading font-bold text-cardinal mt-1">Production Pipeline</h1>
           <p className="text-sm text-gray-500">{submission.title}</p>
         </div>
       </header>

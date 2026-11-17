@@ -4,6 +4,8 @@ import { prisma } from "@stanford-press/database";
 import Link from "next/link";
 import { StatusBadge } from "@/components/status-badge";
 import { NotificationBell } from "@/components/notification-bell";
+import { StanfordBar } from "@/components/app-header";
+import { EditorialNav } from "@/components/editorial-nav";
 
 export const metadata = { title: "Editorial Dashboard" };
 
@@ -111,10 +113,11 @@ export default async function EditorialDashboardPage({ params }: Params) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <StanfordBar />
       <header className="border-b bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
-            <Link href="/dashboard" className="text-lg font-heading font-bold text-navy-950">
+            <Link href="/dashboard" className="text-lg font-heading font-bold text-cardinal">
               Stanford Open Press
             </Link>
             <span className="text-gray-300">/</span>
@@ -122,19 +125,20 @@ export default async function EditorialDashboardPage({ params }: Params) {
           </div>
           <div className="flex items-center gap-3">
             <NotificationBell />
-            <Link href="/profile" className="text-sm text-gray-400 hover:text-navy-950 transition-colors">
+            <Link href="/profile" className="text-sm text-gray-400 hover:text-cardinal transition-colors">
               {session.user.name}
             </Link>
           </div>
         </div>
       </header>
+      <EditorialNav slug={slug} active="dashboard" />
 
       <main className="mx-auto max-w-7xl px-6 py-8">
         {/* Stats cards */}
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mb-8">
           <div className="rounded-xl border bg-white p-4">
             <p className="text-xs text-gray-500 font-medium">Active</p>
-            <p className="text-2xl font-heading font-bold text-navy-950">{totalActive}</p>
+            <p className="text-2xl font-heading font-bold text-cardinal">{totalActive}</p>
           </div>
           <div className="rounded-xl border bg-white p-4">
             <p className="text-xs text-gray-500 font-medium">Needs Action</p>
@@ -146,7 +150,7 @@ export default async function EditorialDashboardPage({ params }: Params) {
           </div>
           <div className="rounded-xl border bg-white p-4">
             <p className="text-xs text-gray-500 font-medium">Acceptance Rate</p>
-            <p className="text-2xl font-heading font-bold text-navy-950">{acceptanceRate}%</p>
+            <p className="text-2xl font-heading font-bold text-cardinal">{acceptanceRate}%</p>
           </div>
         </div>
 
@@ -173,7 +177,7 @@ export default async function EditorialDashboardPage({ params }: Params) {
                           className="flex items-center justify-between rounded-lg border bg-white p-4 hover:shadow-md transition-shadow"
                         >
                           <div className="min-w-0 flex-1">
-                            <p className="font-heading font-medium text-navy-950 truncate">{sub.title}</p>
+                            <p className="font-heading font-medium text-cardinal truncate">{sub.title}</p>
                             <p className="text-xs text-gray-400 mt-0.5">
                               {firstAuthor ? `${firstAuthor.givenName} ${firstAuthor.familyName}` : "\u2014"}
                               {" \u00b7 "}Submitted {daysAgo(sub.submittedAt)}
@@ -204,7 +208,7 @@ export default async function EditorialDashboardPage({ params }: Params) {
                         className="flex items-center justify-between rounded-lg border-2 border-purple-200 bg-purple-50 p-4 hover:bg-purple-100 transition-colors"
                       >
                         <div className="min-w-0 flex-1">
-                          <p className="font-heading font-medium text-navy-950 truncate">{sub.title}</p>
+                          <p className="font-heading font-medium text-cardinal truncate">{sub.title}</p>
                           <p className="text-xs text-gray-500 mt-0.5">
                             {completed.length} reviews: {recommendations.join(", ")}
                           </p>
@@ -235,7 +239,7 @@ export default async function EditorialDashboardPage({ params }: Params) {
                         className="flex items-center justify-between rounded-lg border bg-white p-4 hover:shadow-md transition-shadow"
                       >
                         <div>
-                          <p className="font-heading font-medium text-navy-950 truncate">{sub.title}</p>
+                          <p className="font-heading font-medium text-cardinal truncate">{sub.title}</p>
                         </div>
                         <StatusBadge status={sub.status} />
                       </Link>
@@ -274,7 +278,7 @@ export default async function EditorialDashboardPage({ params }: Params) {
 
             {/* Pipeline overview */}
             <div className="rounded-xl border bg-white p-4">
-              <h3 className="text-sm font-heading font-semibold text-navy-950 mb-3">Pipeline</h3>
+              <h3 className="text-sm font-heading font-semibold text-cardinal mb-3">Pipeline</h3>
               <div className="space-y-2">
                 {[
                   ["Submitted", countMap["Submitted"] || 0],
@@ -287,7 +291,7 @@ export default async function EditorialDashboardPage({ params }: Params) {
                 ].map(([label, count]) => (
                   <div key={label as string} className="flex items-center justify-between text-sm">
                     <span className="text-gray-600">{label}</span>
-                    <span className="font-medium text-navy-950">{count as number}</span>
+                    <span className="font-medium text-cardinal">{count as number}</span>
                   </div>
                 ))}
               </div>
@@ -295,15 +299,15 @@ export default async function EditorialDashboardPage({ params }: Params) {
 
             {/* Quick links */}
             <div className="rounded-xl border bg-white p-4">
-              <h3 className="text-sm font-heading font-semibold text-navy-950 mb-3">Quick Links</h3>
+              <h3 className="text-sm font-heading font-semibold text-cardinal mb-3">Quick Links</h3>
               <div className="space-y-1">
-                <Link href={`/editorial/${slug}/settings`} className="block text-sm text-brand-500 hover:text-brand-700">
+                <Link href={`/editorial/${slug}/settings`} className="block text-sm text-digital-red hover:text-cardinal-dark">
                   Journal Settings
                 </Link>
-                <Link href={`/editorial/${slug}/reviewers`} className="block text-sm text-brand-500 hover:text-brand-700">
+                <Link href={`/editorial/${slug}/reviewers`} className="block text-sm text-digital-red hover:text-cardinal-dark">
                   Reviewer Pool
                 </Link>
-                <Link href={`/editorial/${slug}/templates`} className="block text-sm text-brand-500 hover:text-brand-700">
+                <Link href={`/editorial/${slug}/templates`} className="block text-sm text-digital-red hover:text-cardinal-dark">
                   Email Templates
                 </Link>
               </div>

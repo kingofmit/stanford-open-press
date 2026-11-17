@@ -21,7 +21,7 @@ export async function generateArticlePDFHtml(articleId: string): Promise<string>
     return /^#[0-9a-fA-F]{3,8}$/.test(color) || /^(rgb|hsl)a?\([^)]+\)$/.test(color) || /^[a-zA-Z]+$/.test(color);
   }
 
-  const primaryColor = isValidCssColor(article.journal.primaryColor) ? article.journal.primaryColor : '#1a1a2e';
+  const primaryColor = isValidCssColor(article.journal.primaryColor) ? article.journal.primaryColor : '#8C1515';
 
   const pubDate = article.publishedAt
     ? article.publishedAt.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
@@ -54,7 +54,7 @@ export async function generateArticlePDFHtml(articleId: string): Promise<string>
       font-family: "Source Serif Pro", Georgia, serif;
       font-size: 11pt;
       line-height: 1.6;
-      color: #1a1a2e;
+      color: #8C1515;
       max-width: 100%;
     }
     .header {
@@ -116,7 +116,7 @@ export async function generateArticlePDFHtml(articleId: string): Promise<string>
       font-size: 13pt;
       font-weight: 600;
       margin: 24px 0 8px 0;
-      color: #1a1a2e;
+      color: #8C1515;
     }
     .disclosures {
       border-top: 1px solid #ddd;

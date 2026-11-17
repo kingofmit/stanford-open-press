@@ -135,7 +135,7 @@ export async function POST(request: NextRequest, { params }: Params) {
         subject: `Invitation to Review — ${submission.journal.name}`,
         html: `
           <div style="max-width: 600px; margin: 0 auto; font-family: sans-serif; color: #333;">
-            <div style="background: #1a1a2e; padding: 24px; text-align: center;">
+            <div style="background: #8C1515; padding: 24px; text-align: center;">
               <h1 style="color: white; font-size: 20px; margin: 0;">${escapeHtml(submission.journal.name)}</h1>
             </div>
             <div style="padding: 32px 24px;">

@@ -80,7 +80,7 @@ export default async function SearchPage({
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
-      <h1 className="text-2xl font-heading font-bold text-navy-950 mb-6">Search</h1>
+      <h1 className="text-2xl font-heading font-bold text-cardinal mb-6">Search</h1>
 
       <SearchForm slug={slug} initialQuery={q || ""} />
 
@@ -95,7 +95,7 @@ export default async function SearchPage({
               {results.map((article) => (
                 <article key={article.id} className="border-b border-gray-100 pb-6 last:border-0">
                   <Link href={`/${slug}/article/${article.id}`} className="group">
-                    <h3 className="text-lg font-heading font-semibold text-navy-950 group-hover:text-brand-500 transition-colors">
+                    <h3 className="text-lg font-heading font-semibold text-cardinal group-hover:text-digital-red transition-colors">
                       {article.title}
                     </h3>
                   </Link>

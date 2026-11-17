@@ -2,6 +2,8 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@stanford-press/database";
 import Link from "next/link";
+import { StanfordBar } from "@/components/app-header";
+import { EditorialNav } from "@/components/editorial-nav";
 
 export const metadata = { title: "Editorial Analytics" };
 
@@ -164,26 +166,28 @@ export default async function AnalyticsPage({ params }: Params) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <StanfordBar />
       <header className="border-b bg-white">
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex items-center gap-2 text-sm text-gray-500">
-            <Link href={`/editorial/${slug}`} className="hover:text-navy-950 transition-colors">{journal.name}</Link>
+            <Link href={`/editorial/${slug}`} className="hover:text-cardinal transition-colors">{journal.name}</Link>
             <span>/</span>
-            <span className="text-navy-950">Analytics</span>
+            <span className="text-cardinal">Analytics</span>
           </div>
         </div>
       </header>
+      <EditorialNav slug={slug} active="analytics" />
 
       <main className="mx-auto max-w-7xl px-6 py-8">
         {/* KPI cards */}
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6 mb-8">
           {[
-            { label: "Total Submissions", value: totalSubmissions, color: "text-navy-950" },
+            { label: "Total Submissions", value: totalSubmissions, color: "text-cardinal" },
             { label: "Published", value: published, color: "text-green-600" },
-            { label: "Acceptance Rate", value: `${acceptanceRate}%`, color: "text-navy-950" },
-            { label: "Avg Days to Decision", value: avgDaysToDecision, color: avgDaysToDecision > 60 ? "text-red-600" : "text-navy-950" },
-            { label: "Avg Review Days", value: avgReviewDays, color: "text-navy-950" },
-            { label: "Overdue Reviews", value: overdueCount, color: overdueCount > 0 ? "text-red-600" : "text-green-600" },
+            { label: "Acceptance Rate", value: `${acceptanceRate}%`, color: "text-cardinal" },
+            { label: "Avg Days to Decision", value: avgDaysToDecision, color: avgDaysToDecision > 60 ? "text-red-600" : "text-cardinal" },
+            { label: "Avg Review Days", value: avgReviewDays, color: "text-cardinal" },
+            { label: "Overdue Reviews", value: overdueCount, color: overdueCount > 0 ? "text-red-600" : "text-cardinal" },
           ].map((kpi) => (
             <div key={kpi.label} className="rounded-xl border bg-white p-4">
               <p className="text-xs text-gray-500 font-medium">{kpi.label}</p>
@@ -202,12 +206,12 @@ export default async function AnalyticsPage({ params }: Params) {
               {Object.entries(monthlyData).map(([month, count]) => (
                 <div key={month} className="flex-1 flex flex-col items-center">
                   <div
-                    className="w-full bg-brand-500 rounded-t"
+                    className="w-full bg-digital-red rounded-t"
                     style={{ height: `${(count / maxMonthly) * 100}%`, minHeight: count > 0 ? "4px" : "0" }}
                     title={`${month}: ${count}`}
                   />
                   <span className="text-xs text-gray-400 mt-1 -rotate-45 origin-top-left">
-                    {month.split("-")[1]}
+                    {new Date(month + "-01").toLocaleDateString("en-US", { month: "short" })}
                   </span>
                 </div>
               ))}
@@ -255,7 +259,7 @@ export default async function AnalyticsPage({ params }: Params) {
                 {sectionCounts.map((sc) => (
                   <div key={sc.sectionId} className="flex items-center justify-between text-sm">
                     <span className="text-gray-700">{sectionNameMap.get(sc.sectionId!) || "Unknown"}</span>
-                    <span className="font-medium text-navy-950">{sc._count}</span>
+                    <span className="font-medium text-cardinal">{sc._count}</span>
                   </div>
                 ))}
               </div>
@@ -282,7 +286,7 @@ export default async function AnalyticsPage({ params }: Params) {
                       <div className="flex items-center gap-3">
                         <span className="text-xs text-gray-400">{tr._count} reviews</span>
                         {user?.qualityScore && (
-                          <span className="text-xs text-brand-500">Q: {Math.round(user.qualityScore)}</span>
+                          <span className="text-xs text-digital-red">Q: {Math.round(user.qualityScore)}</span>
                         )}
                       </div>
                     </div>
@@ -310,7 +314,7 @@ export default async function AnalyticsPage({ params }: Params) {
               ].map((stage, i) => (
                 <div key={stage.key} className="flex items-center">
                   <div className="rounded-lg border bg-gray-50 px-4 py-3 text-center min-w-[100px]">
-                    <p className="text-lg font-heading font-bold text-navy-950">
+                    <p className="text-lg font-heading font-bold text-cardinal">
                       {countMap[stage.key] || 0}
                     </p>
                     <p className="text-xs text-gray-500">{stage.label}</p>

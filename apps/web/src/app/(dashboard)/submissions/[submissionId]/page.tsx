@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@stanford-press/database";
 import Link from "next/link";
 import { StatusBadge } from "@/components/status-badge";
+import { StanfordBar } from "@/components/app-header";
 
 export const metadata = { title: "Submission Details" };
 
@@ -39,9 +40,10 @@ export default async function SubmissionDetailPage({ params }: Params) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <StanfordBar />
       <header className="border-b bg-white">
         <div className="mx-auto max-w-4xl px-6 py-4">
-          <Link href="/dashboard" className="text-sm text-gray-500 hover:text-navy-950 transition-colors">
+          <Link href="/dashboard" className="text-sm text-gray-500 hover:text-cardinal transition-colors">
             &larr; Back to Dashboard
           </Link>
         </div>
@@ -51,7 +53,7 @@ export default async function SubmissionDetailPage({ params }: Params) {
         {/* Header */}
         <div>
           <div className="flex items-start justify-between gap-4">
-            <h1 className="text-xl font-heading font-bold text-navy-950">{submission.title}</h1>
+            <h1 className="text-xl font-heading font-bold text-cardinal">{submission.title}</h1>
             <StatusBadge status={submission.status} />
           </div>
           <p className="text-sm text-gray-500 mt-1">
@@ -69,7 +71,7 @@ export default async function SubmissionDetailPage({ params }: Params) {
           <div className="space-y-3">
             {submission.statusHistory.map((change, i) => (
               <div key={change.id} className="flex items-start gap-3">
-                <div className={`mt-1.5 h-2 w-2 rounded-full ${i === 0 ? "bg-brand-500" : "bg-gray-300"}`} />
+                <div className={`mt-1.5 h-2 w-2 rounded-full ${i === 0 ? "bg-digital-red" : "bg-gray-300"}`} />
                 <div>
                   <p className="text-sm text-gray-900">
                     Status changed to <span className="font-medium">{change.toStatus}</span>
@@ -117,7 +119,7 @@ export default async function SubmissionDetailPage({ params }: Params) {
                 <span className="font-medium text-gray-900">
                   {author.givenName} {author.familyName}
                 </span>
-                {author.corresponding && <span className="text-brand-500 ml-1">*</span>}
+                {author.corresponding && <span className="text-digital-red ml-1">*</span>}
                 {author.affiliation && <span className="text-gray-400"> &mdash; {author.affiliation}</span>}
                 {author.orcid && <span className="text-gray-400"> &middot; ORCID: {author.orcid}</span>}
               </div>

@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { prisma } from "@stanford-press/database";
 import Link from "next/link";
 import { TemplateEditor } from "./template-editor";
+import { StanfordBar } from "@/components/app-header";
+import { EditorialNav } from "@/components/editorial-nav";
 
 export const metadata = { title: "Email Templates" };
 
@@ -32,14 +34,16 @@ export default async function TemplatesPage({ params }: Params) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <StanfordBar />
       <header className="border-b bg-white">
         <div className="mx-auto max-w-4xl px-6 py-4">
-          <Link href={`/editorial/${slug}`} className="text-sm text-gray-500 hover:text-navy-950 transition-colors">
+          <Link href={`/editorial/${slug}`} className="text-sm text-gray-500 hover:text-cardinal transition-colors">
             &larr; Back to Dashboard
           </Link>
-          <h1 className="text-lg font-heading font-bold text-navy-950 mt-1">Email Templates</h1>
+          <h1 className="text-lg font-heading font-bold text-cardinal mt-1">Email Templates</h1>
         </div>
       </header>
+      <EditorialNav slug={slug} active="templates" />
       <main className="mx-auto max-w-4xl px-6 py-8">
         <TemplateEditor journalId={journal.id} templates={templates} />
       </main>

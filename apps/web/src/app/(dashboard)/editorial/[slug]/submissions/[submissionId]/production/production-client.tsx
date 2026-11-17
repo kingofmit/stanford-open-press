@@ -121,7 +121,7 @@ export function ProductionClient({
       )}
       {/* Copyediting section */}
       <section className="rounded-xl border bg-white p-6">
-        <h2 className="text-lg font-heading font-semibold text-navy-950 mb-4">Copyediting</h2>
+        <h2 className="text-lg font-heading font-semibold text-cardinal mb-4">Copyediting</h2>
         {copyeditRecords.length > 0 ? (
           <div className="space-y-3">
             {copyeditRecords.map((rec) => (
@@ -158,7 +158,7 @@ export function ProductionClient({
                   if (select.value) startCopyediting(select.value);
                 }}
                 disabled={loading === "copyedit"}
-                className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50"
+                className="rounded-lg bg-digital-red px-4 py-2 text-sm font-medium text-white hover:bg-cardinal disabled:opacity-50"
               >
                 {loading === "copyedit" ? "Assigning..." : "Assign"}
               </button>
@@ -170,7 +170,7 @@ export function ProductionClient({
       {/* Production pipeline */}
       <section className="rounded-xl border bg-white p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-heading font-semibold text-navy-950">Production Pipeline</h2>
+          <h2 className="text-lg font-heading font-semibold text-cardinal">Production Pipeline</h2>
           {tasks.length > 0 && (
             <span className="text-sm text-gray-500">{progress}% complete</span>
           )}
@@ -189,7 +189,7 @@ export function ProductionClient({
             <button
               onClick={createPipeline}
               disabled={loading === "create"}
-              className="rounded-lg bg-navy-950 px-6 py-2.5 text-sm font-medium text-white hover:bg-navy-900 disabled:opacity-50"
+              className="rounded-lg bg-cardinal px-6 py-2.5 text-sm font-medium text-white hover:bg-cardinal disabled:opacity-50"
             >
               {loading === "create" ? "Creating..." : "Create Production Pipeline"}
             </button>
@@ -202,14 +202,14 @@ export function ProductionClient({
                 <div
                   key={task.id}
                   className={`flex items-center justify-between rounded-lg border p-4 ${
-                    isActive ? "border-brand-500 bg-brand-50" : "border-gray-200"
+                    isActive ? "border-digital-red bg-red-50" : "border-gray-200"
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <span className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium ${
                       task.status === "Completed" ? "bg-green-500 text-white" :
                       task.status === "Skipped" ? "bg-gray-200 text-gray-400" :
-                      isActive ? "bg-brand-500 text-white" : "bg-gray-100 text-gray-400"
+                      isActive ? "bg-digital-red text-white" : "bg-gray-100 text-gray-400"
                     }`}>
                       {task.status === "Completed" ? "\u2713" : task.status === "Skipped" ? "\u2014" : i + 1}
                     </span>

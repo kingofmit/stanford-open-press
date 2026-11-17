@@ -73,7 +73,7 @@ export default async function GlobalSearchPage({
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="border-b bg-navy-950">
+      <header className="border-b bg-cardinal">
         <div className="mx-auto max-w-5xl px-6 py-6">
           <Link href="/" className="text-xl font-heading font-bold text-white">
             Stanford Open Press
@@ -106,14 +106,14 @@ export default async function GlobalSearchPage({
                       href={`/${article.journal.slug}/article/${article.id}`}
                       className="group"
                     >
-                      <h3 className="text-lg font-heading font-semibold text-navy-950 group-hover:text-brand-500 transition-colors">
+                      <h3 className="text-lg font-heading font-semibold text-cardinal group-hover:text-digital-red transition-colors">
                         {article.title}
                       </h3>
                     </Link>
                     <p className="text-sm text-gray-500 mt-1">
                       {article.authors.map((a: any) => `${a.givenName} ${a.familyName}`).join(", ")}
                       <span className="text-gray-300 mx-2">|</span>
-                      <Link href={`/${article.journal.slug}`} className="text-brand-500 hover:text-brand-700">
+                      <Link href={`/${article.journal.slug}`} className="text-digital-red hover:text-cardinal-dark">
                         {article.journal.name}
                       </Link>
                     </p>

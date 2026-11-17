@@ -1,7 +1,10 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { prisma } from "@stanford-press/database";
+import { FileText } from "lucide-react";
 import { ReviewFormClient } from "./review-form";
+import { StanfordBar } from "@/components/app-header";
 
 export const metadata = { title: "Submit Review" };
 
@@ -55,10 +58,12 @@ export default async function ReviewPage({ params }: Params) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <StanfordBar />
       <header className="border-b bg-white">
         <div className="mx-auto max-w-6xl px-6 py-4">
+          <Link href="/dashboard" className="text-sm text-cool-grey hover:text-cardinal transition-colors">&larr; Dashboard</Link>
           <p className="text-sm text-gray-500">{assignment.submission.journal.name}</p>
-          <h1 className="text-lg font-heading font-bold text-navy-950 mt-0.5">
+          <h1 className="text-lg font-heading font-bold text-cardinal mt-0.5">
             Review Submission
           </h1>
         </div>
@@ -68,7 +73,7 @@ export default async function ReviewPage({ params }: Params) {
           {/* Manuscript info */}
           <div className="lg:col-span-2 space-y-6">
             <div className="rounded-xl border bg-white p-6">
-              <h2 className="font-heading font-semibold text-navy-950 mb-3">
+              <h2 className="font-heading font-semibold text-cardinal mb-3">
                 {assignment.reviewType === "DoubleBlind" ? "[Title hidden for double-blind review]" : assignment.submission.title}
               </h2>
               {authors.length > 0 && (
@@ -101,9 +106,9 @@ export default async function ReviewPage({ params }: Params) {
                       href={`/api/files/${f.storagePath}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm text-brand-500 hover:text-brand-700"
+                      className="flex items-center gap-2 text-sm text-digital-red hover:text-cardinal-dark"
                     >
-                      <span>&#128196;</span> {f.filename}
+                      <FileText className="h-4 w-4 shrink-0" /> {f.filename}
                       <span className="text-xs text-gray-400">({f.category})</span>
                     </a>
                   ))}

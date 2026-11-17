@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { Mail } from "lucide-react";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
@@ -19,10 +20,10 @@ export function LoginForm() {
   if (sent) {
     return (
       <div className="text-center py-8">
-        <div className="text-4xl mb-4">&#9993;</div>
-        <h2 className="text-lg font-heading font-semibold text-white">Check your email</h2>
-        <p className="mt-2 text-sm text-white/50">
-          We sent a sign-in link to <strong className="text-white">{email}</strong>
+        <div className="mb-4 flex justify-center"><Mail className="h-10 w-10 text-cardinal" /></div>
+        <h2 className="text-lg font-heading font-semibold text-su-black">Check your email</h2>
+        <p className="mt-2 text-sm text-cool-grey">
+          We sent a sign-in link to <strong className="text-su-black">{email}</strong>
         </p>
       </div>
     );
@@ -32,7 +33,7 @@ export function LoginForm() {
     <div className="space-y-6">
       <button
         onClick={() => signIn("orcid", { callbackUrl: "/dashboard" })}
-        className="flex w-full items-center justify-center gap-3 rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-sm font-medium text-white hover:bg-white/10 transition-colors"
+        className="flex w-full items-center justify-center gap-3 rounded-md border border-fog bg-white px-4 py-3 text-sm font-sans font-medium text-su-black hover:bg-gray-50 transition-colors"
       >
         <svg width="20" height="20" viewBox="0 0 256 256" fill="none">
           <path d="M128 0C57.3 0 0 57.3 0 128s57.3 128 128 128 128-57.3 128-128S198.7 0 128 0z" fill="#A6CE39"/>
@@ -44,16 +45,16 @@ export function LoginForm() {
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-white/10" />
+          <div className="w-full border-t border-fog" />
         </div>
         <div className="relative flex justify-center text-xs">
-          <span className="bg-navy-950 px-4 text-white/40">or continue with email</span>
+          <span className="bg-white px-4 text-cool-grey">or continue with email</span>
         </div>
       </div>
 
       <form onSubmit={handleEmailSignIn} className="space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-white/70 mb-1.5">
+          <label htmlFor="email" className="block text-sm font-sans font-medium text-su-black mb-1.5">
             Email address
           </label>
           <input
@@ -63,13 +64,13 @@ export function LoginForm() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@university.edu"
             required
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+            className="w-full rounded-md border border-fog bg-white px-4 py-2.5 text-sm text-su-black placeholder:text-stone focus:border-digital-red focus:outline-none focus:ring-1 focus:ring-digital-red"
           />
         </div>
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors"
+          className="w-full rounded-md bg-digital-red px-4 py-2.5 text-sm font-sans font-semibold text-white hover:bg-cardinal disabled:opacity-50 transition-colors"
         >
           {loading ? "Sending..." : "Send Magic Link"}
         </button>

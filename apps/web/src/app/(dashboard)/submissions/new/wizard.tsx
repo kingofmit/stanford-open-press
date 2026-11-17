@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -304,15 +305,15 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
               className={cn(
                 "flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium transition-colors",
                 i === step
-                  ? "bg-brand-500 text-white"
+                  ? "bg-digital-red text-white"
                   : i < step
-                    ? "bg-brand-100 text-brand-700 hover:bg-brand-200 cursor-pointer"
+                    ? "bg-red-100 text-cardinal-dark hover:bg-red-200 cursor-pointer"
                     : "bg-gray-100 text-gray-400"
               )}
             >
               {i < step ? "\u2713" : i + 1}
             </button>
-            <span className={cn("hidden text-xs sm:block", i === step ? "text-navy-950 font-medium" : "text-gray-400")}>
+            <span className={cn("hidden text-xs sm:block", i === step ? "text-su-black font-medium" : "text-gray-400")}>
               {s.title}
             </span>
             {i < STEPS.length - 1 && <div className="hidden h-px w-6 bg-gray-200 sm:block" />}
@@ -334,14 +335,14 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
         {/* Step 0: Metadata */}
         {step === 0 && (
           <div className="space-y-6">
-            <h2 className="text-xl font-heading font-semibold text-navy-950">Article Details</h2>
+            <h2 className="text-xl font-heading font-semibold text-cardinal">Article Details</h2>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Journal *</label>
               <select
                 value={journalId}
                 onChange={(e) => { setJournalId(e.target.value); setSectionId(""); }}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none focus:ring-1 focus:ring-digital-red"
               >
                 <option value="">Select a journal...</option>
                 {journals.map((j) => (
@@ -356,7 +357,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                 <select
                   value={sectionId}
                   onChange={(e) => setSectionId(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none focus:ring-1 focus:ring-digital-red"
                 >
                   <option value="">Select a section...</option>
                   {selectedJournal.sections.map((s) => (
@@ -373,7 +374,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Enter your manuscript title"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none focus:ring-1 focus:ring-digital-red"
               />
             </div>
 
@@ -386,7 +387,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                 onChange={(e) => setAbstract(e.target.value)}
                 rows={8}
                 placeholder="Enter your abstract..."
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none focus:ring-1 focus:ring-digital-red"
               />
             </div>
 
@@ -399,7 +400,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                 value={keywords}
                 onChange={(e) => setKeywords(e.target.value)}
                 placeholder="machine learning, natural language processing, transformers"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none focus:ring-1 focus:ring-digital-red"
               />
             </div>
           </div>
@@ -409,10 +410,10 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
         {step === 1 && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-heading font-semibold text-navy-950">Authors</h2>
+              <h2 className="text-xl font-heading font-semibold text-cardinal">Authors</h2>
               <button
                 onClick={addAuthor}
-                className="rounded-lg bg-brand-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-600 transition-colors"
+                className="rounded-lg bg-digital-red px-3 py-1.5 text-xs font-medium text-white hover:bg-cardinal transition-colors"
               >
                 + Add Author
               </button>
@@ -429,7 +430,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                         name="corresponding"
                         checked={author.corresponding}
                         onChange={() => updateAuthor(i, "corresponding", true)}
-                        className="accent-brand-500"
+                        className="accent-digital-red"
                       />
                       Corresponding
                     </label>
@@ -444,27 +445,27 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                   <input
                     type="text" placeholder="Given name *" value={author.givenName}
                     onChange={(e) => updateAuthor(i, "givenName", e.target.value)}
-                    className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                    className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
                   />
                   <input
                     type="text" placeholder="Family name *" value={author.familyName}
                     onChange={(e) => updateAuthor(i, "familyName", e.target.value)}
-                    className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                    className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
                   />
                   <input
                     type="email" placeholder="Email *" value={author.email}
                     onChange={(e) => updateAuthor(i, "email", e.target.value)}
-                    className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                    className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
                   />
                   <input
                     type="text" placeholder="Affiliation" value={author.affiliation}
                     onChange={(e) => updateAuthor(i, "affiliation", e.target.value)}
-                    className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                    className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
                   />
                   <input
                     type="text" placeholder="ORCID (0000-0000-0000-0000)" value={author.orcid}
                     onChange={(e) => updateAuthor(i, "orcid", e.target.value)}
-                    className="sm:col-span-2 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                    className="sm:col-span-2 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
                   />
                 </div>
               </div>
@@ -475,12 +476,12 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
         {/* Step 2: Files */}
         {step === 2 && (
           <div className="space-y-6">
-            <h2 className="text-xl font-heading font-semibold text-navy-950">Files</h2>
+            <h2 className="text-xl font-heading font-semibold text-cardinal">Files</h2>
 
             <div
               onDragOver={(e) => e.preventDefault()}
               onDrop={handleFileDrop}
-              className="rounded-lg border-2 border-dashed border-gray-300 p-8 text-center hover:border-brand-500 transition-colors cursor-pointer"
+              className="rounded-lg border-2 border-dashed border-gray-300 p-8 text-center hover:border-digital-red transition-colors cursor-pointer"
               onClick={() => {
                 const input = document.createElement("input");
                 input.type = "file";
@@ -493,7 +494,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                 input.click();
               }}
             >
-              <div className="text-3xl mb-2">&#128196;</div>
+              <div className="mb-2 flex justify-center"><Upload className="h-8 w-8 text-gray-400" /></div>
               <p className="text-sm font-medium text-gray-700">
                 Drag and drop files here, or click to browse
               </p>
@@ -530,7 +531,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                         <option value="CoverLetter">Cover Letter</option>
                       </select>
                       {f.uploaded && <span className="text-xs text-green-600">{"\u2713"} Uploaded</span>}
-                      {f.uploading && <span className="text-xs text-brand-500">Uploading...</span>}
+                      {f.uploading && <span className="text-xs text-digital-red">Uploading...</span>}
                       {!f.uploaded && (
                         <button onClick={() => removeFile(i)} className="text-xs text-red-500 hover:text-red-700">
                           Remove
@@ -547,7 +548,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
         {/* Step 3: Cover Letter */}
         {step === 3 && (
           <div className="space-y-6">
-            <h2 className="text-xl font-heading font-semibold text-navy-950">Cover Letter</h2>
+            <h2 className="text-xl font-heading font-semibold text-cardinal">Cover Letter</h2>
             <p className="text-sm text-gray-500">
               Optional. Address the editor and explain why your manuscript is suitable for this journal.
             </p>
@@ -556,7 +557,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
               onChange={(e) => setCoverLetter(e.target.value)}
               rows={12}
               placeholder={"Dear Editor,\n\nWe are pleased to submit our manuscript titled..."}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none focus:ring-1 focus:ring-digital-red"
             />
           </div>
         )}
@@ -564,7 +565,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
         {/* Step 4: Disclosures */}
         {step === 4 && (
           <div className="space-y-6">
-            <h2 className="text-xl font-heading font-semibold text-navy-950">Disclosures</h2>
+            <h2 className="text-xl font-heading font-semibold text-cardinal">Disclosures</h2>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Conflict of Interest Statement</label>
@@ -573,7 +574,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                 onChange={(e) => setConflictOfInterest(e.target.value)}
                 rows={3}
                 placeholder="Declare any conflicts of interest or state 'The authors declare no conflicts of interest.'"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
               />
             </div>
 
@@ -584,7 +585,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                 onChange={(e) => setFunding(e.target.value)}
                 rows={3}
                 placeholder="List grants and funding sources, or state 'This research received no specific funding.'"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
               />
             </div>
 
@@ -595,7 +596,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                 onChange={(e) => setDataAvailability(e.target.value)}
                 rows={3}
                 placeholder="Describe how the data supporting this study can be accessed."
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
               />
             </div>
 
@@ -606,7 +607,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                 onChange={(e) => setEthicsApproval(e.target.value)}
                 rows={3}
                 placeholder="If applicable, provide ethics committee approval details."
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
               />
             </div>
           </div>
@@ -615,17 +616,17 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
         {/* Step 5: Review & Submit */}
         {step === 5 && (
           <div className="space-y-6">
-            <h2 className="text-xl font-heading font-semibold text-navy-950">Review & Submit</h2>
+            <h2 className="text-xl font-heading font-semibold text-cardinal">Review & Submit</h2>
 
             <div className="space-y-4">
               <div className="rounded-lg bg-gray-50 p-4">
                 <h3 className="text-sm font-medium text-gray-500 mb-1">Journal</h3>
-                <p className="text-sm text-navy-950">{selectedJournal?.name || "\u2014"}</p>
+                <p className="text-sm text-su-black">{selectedJournal?.name || "\u2014"}</p>
               </div>
 
               <div className="rounded-lg bg-gray-50 p-4">
                 <h3 className="text-sm font-medium text-gray-500 mb-1">Title</h3>
-                <p className="text-sm text-navy-950 font-medium">{title || "\u2014"}</p>
+                <p className="text-sm text-su-black font-medium">{title || "\u2014"}</p>
               </div>
 
               <div className="rounded-lg bg-gray-50 p-4">
@@ -639,7 +640,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                   {authors.map((a, i) => (
                     <p key={i} className="text-sm text-gray-700">
                       {a.givenName} {a.familyName}
-                      {a.corresponding && <span className="text-brand-500 ml-1">*</span>}
+                      {a.corresponding && <span className="text-digital-red ml-1">*</span>}
                       {a.affiliation && <span className="text-gray-400"> &mdash; {a.affiliation}</span>}
                     </p>
                   ))}
@@ -695,7 +696,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
             <button
               onClick={handleNext}
               disabled={saving}
-              className="rounded-lg bg-brand-500 px-6 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors"
+              className="rounded-lg bg-digital-red px-6 py-2 text-sm font-medium text-white hover:bg-cardinal disabled:opacity-50 transition-colors"
             >
               Continue
             </button>

@@ -53,9 +53,9 @@ export const authConfig: NextAuthConfig = {
             subject: "Sign in to Stanford Open Press",
             html: `
               <div style="max-width: 480px; margin: 0 auto; font-family: sans-serif;">
-                <h2 style="color: #1a1a2e;">Stanford Open Press</h2>
+                <h2 style="color: #8C1515;">Stanford Open Press</h2>
                 <p>Click the link below to sign in:</p>
-                <a href="${url}" style="display: inline-block; background: #e94560; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
+                <a href="${url}" style="display: inline-block; background: #B1040E; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
                   Sign In
                 </a>
                 <p style="color: #666; font-size: 14px; margin-top: 24px;">

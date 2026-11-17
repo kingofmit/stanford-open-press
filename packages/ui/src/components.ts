@@ -26,9 +26,9 @@ export const DEFAULT_WIZARD_STEPS: WizardStep[] = [
  * Default journal theme configuration.
  */
 export const DEFAULT_THEME: JournalTheme = {
-  primaryColor: "#1a1a2e",
-  accentColor: "#e94560",
-  headingFont: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+  primaryColor: "#8C1515",
+  accentColor: "#B1040E",
+  headingFont: "'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif",
   bodyFont: "'Source Serif 4', Georgia, 'Times New Roman', serif",
   darkMode: false,
 };

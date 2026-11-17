@@ -4,6 +4,8 @@ import { prisma } from "@stanford-press/database";
 import Link from "next/link";
 import { StatusBadge } from "@/components/status-badge";
 import { DecisionForm } from "./decision-form";
+import { InviteButton } from "./invite-button";
+import { StanfordBar } from "@/components/app-header";
 
 export const metadata = { title: "Submission Review" };
 
@@ -82,14 +84,15 @@ export default async function EditorialSubmissionPage({ params }: Params) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <StanfordBar />
       <header className="border-b bg-white">
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex items-center gap-2 text-sm text-gray-500">
-            <Link href={`/editorial/${slug}`} className="hover:text-navy-950 transition-colors">
+            <Link href={`/editorial/${slug}`} className="hover:text-cardinal transition-colors">
               {journal.name}
             </Link>
             <span>/</span>
-            <span className="text-navy-950">Submission</span>
+            <span className="text-cardinal">Submission</span>
           </div>
         </div>
       </header>
@@ -98,7 +101,7 @@ export default async function EditorialSubmissionPage({ params }: Params) {
         {/* Header */}
         <div className="mb-8 flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-xl font-heading font-bold text-navy-950">{submission.title}</h1>
+            <h1 className="text-xl font-heading font-bold text-cardinal">{submission.title}</h1>
             <p className="text-sm text-gray-500 mt-1">
               {submission.authors.map((a) => `${a.givenName} ${a.familyName}`).join(", ")}
               {submission.section && ` \u00b7 ${submission.section.name}`}
@@ -135,7 +138,7 @@ export default async function EditorialSubmissionPage({ params }: Params) {
                     <div key={review.id} className="border-b border-gray-100 pb-6 last:border-0 last:pb-0">
                       <div className="flex items-center justify-between mb-3">
                         <div>
-                          <span className="text-sm font-medium text-navy-950">
+                          <span className="text-sm font-medium text-cardinal">
                             {review.reviewer.name}
                           </span>
                           <span className="text-xs text-gray-400 ml-2">{review.reviewer.affiliation}</span>
@@ -152,7 +155,7 @@ export default async function EditorialSubmissionPage({ params }: Params) {
                               {review.reviewScores.map((s) => (
                                 <div key={s.id} className="rounded-lg bg-gray-50 px-3 py-1.5 text-xs">
                                   <span className="text-gray-500">{s.criterion.label}:</span>{" "}
-                                  <span className="font-medium text-navy-950">{s.score}/{s.criterion.maxScore}</span>
+                                  <span className="font-medium text-cardinal">{s.score}/{s.criterion.maxScore}</span>
                                 </div>
                               ))}
                             </div>
@@ -234,7 +237,7 @@ export default async function EditorialSubmissionPage({ params }: Params) {
           <div className="space-y-6">
             {/* Files */}
             <div className="rounded-xl border bg-white p-4">
-              <h3 className="text-sm font-heading font-semibold text-navy-950 mb-3">Files</h3>
+              <h3 className="text-sm font-heading font-semibold text-cardinal mb-3">Files</h3>
               <div className="space-y-1">
                 {submission.files.map((f) => (
                   <a
@@ -242,7 +245,7 @@ export default async function EditorialSubmissionPage({ params }: Params) {
                     href={`/api/files/${f.storagePath}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between text-sm text-brand-500 hover:text-brand-700 py-1"
+                    className="flex items-center justify-between text-sm text-digital-red hover:text-cardinal-dark py-1"
                   >
                     <span className="truncate">{f.filename}</span>
                     <span className="text-xs text-gray-400 ml-2 shrink-0">v{f.version}</span>
@@ -254,24 +257,22 @@ export default async function EditorialSubmissionPage({ params }: Params) {
             {/* Invite reviewer */}
             {["Submitted", "DeskReview", "UnderReview", "RevisionSubmitted"].includes(submission.status) && (
               <div className="rounded-xl border bg-white p-4">
-                <h3 className="text-sm font-heading font-semibold text-navy-950 mb-3">Invite Reviewer</h3>
+                <h3 className="text-sm font-heading font-semibold text-cardinal mb-3">Invite Reviewer</h3>
                 {reviewers.length === 0 ? (
                   <p className="text-xs text-gray-400">No available reviewers</p>
                 ) : (
                   <div className="space-y-2">
                     {reviewers.slice(0, 5).map((r) => (
-                      <form key={r.id} action={`/api/submissions/${submission.id}/reviews`} method="POST">
-                        <input type="hidden" name="reviewerId" value={r.id} />
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">{r.name}</p>
-                            <p className="text-xs text-gray-400">
-                              {r.affiliation || r.email}
-                              {r.totalCompleted > 0 && ` \u00b7 ${r.totalCompleted} reviews`}
-                            </p>
-                          </div>
+                      <div key={r.id} className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">{r.name}</p>
+                          <p className="text-xs text-gray-400">
+                            {r.affiliation || r.email}
+                            {r.totalCompleted > 0 && ` \u00b7 ${r.totalCompleted} reviews`}
+                          </p>
                         </div>
-                      </form>
+                        <InviteButton submissionId={submission.id} reviewerId={r.id} />
+                      </div>
                     ))}
                   </div>
                 )}
@@ -280,7 +281,7 @@ export default async function EditorialSubmissionPage({ params }: Params) {
 
             {/* Timeline */}
             <div className="rounded-xl border bg-white p-4">
-              <h3 className="text-sm font-heading font-semibold text-navy-950 mb-3">Timeline</h3>
+              <h3 className="text-sm font-heading font-semibold text-cardinal mb-3">Timeline</h3>
               <div className="space-y-2">
                 {submission.statusHistory.map((change) => (
                   <div key={change.id} className="flex items-start gap-2">

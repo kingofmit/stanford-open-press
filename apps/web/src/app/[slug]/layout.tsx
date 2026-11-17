@@ -2,6 +2,7 @@ import { prisma } from "@stanford-press/database";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { JournalNav } from "@/components/journal-nav";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -50,22 +51,8 @@ export default async function JournalLayout({
           {journal.abbreviation && (
             <span className="ml-2 text-sm text-white/50">({journal.abbreviation})</span>
           )}
-          <nav className="mt-3 flex gap-6 text-sm">
-            <Link href={`/${journal.slug}`} className="text-white/70 hover:text-white transition-colors">
-              Current Issue
-            </Link>
-            <Link href={`/${journal.slug}/issues`} className="text-white/70 hover:text-white transition-colors">
-              Archives
-            </Link>
-            <Link href={`/${journal.slug}/search`} className="text-white/70 hover:text-white transition-colors">
-              Search
-            </Link>
-            <Link href={`/${journal.slug}/about`} className="text-white/70 hover:text-white transition-colors">
-              About
-            </Link>
-            <Link href="/submissions/new" className="text-white/70 hover:text-white transition-colors">
-              Submit
-            </Link>
+          <nav className="mt-3">
+            <JournalNav slug={journal.slug} />
           </nav>
         </div>
       </header>
@@ -74,7 +61,7 @@ export default async function JournalLayout({
         <div className="mx-auto max-w-5xl px-6 text-center text-sm text-gray-400">
           <p>{journal.name}</p>
           {journal.issn && <p className="mt-1">ISSN: {journal.issn}{journal.eissn ? ` (Online: ${journal.eissn})` : ""}</p>}
-          <p className="mt-1">Published on <Link href="/" className="text-brand-500 hover:text-brand-700">Stanford Open Press</Link></p>
+          <p className="mt-1">Published on <Link href="/" className="text-digital-red hover:text-cardinal-dark">Stanford Open Press</Link></p>
         </div>
       </footer>
     </div>

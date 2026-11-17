@@ -93,11 +93,11 @@ export function TemplateEditor({ journalId, templates }: { journalId: string; te
             onClick={() => { setSelected(t.id); setSaved(false); }}
             className={`w-full text-left rounded-lg border p-3 transition-colors ${
               selected === t.id
-                ? "border-brand-500 bg-brand-50"
+                ? "border-digital-red bg-red-50"
                 : "border-gray-200 bg-white hover:border-gray-300"
             }`}
           >
-            <p className="text-sm font-medium text-navy-950">
+            <p className="text-sm font-medium text-cardinal">
               {EVENT_LABELS[t.eventKey] || t.eventKey}
             </p>
             <p className="text-xs text-gray-400 mt-0.5 truncate">{t.subject}</p>
@@ -111,7 +111,7 @@ export function TemplateEditor({ journalId, templates }: { journalId: string; te
           <>
             <div className="rounded-xl border bg-white p-6 space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-heading font-semibold text-navy-950">
+                <h2 className="text-lg font-heading font-semibold text-cardinal">
                   {EVENT_LABELS[current?.eventKey || ""] || current?.eventKey}
                 </h2>
                 <label className="flex items-center gap-2 text-sm">
@@ -119,7 +119,7 @@ export function TemplateEditor({ journalId, templates }: { journalId: string; te
                     type="checkbox"
                     checked={currentEdit.enabled}
                     onChange={(e) => updateField("enabled", e.target.checked)}
-                    className="accent-brand-500"
+                    className="accent-digital-red"
                   />
                   Enabled
                 </label>
@@ -131,7 +131,7 @@ export function TemplateEditor({ journalId, templates }: { journalId: string; te
                   type="text"
                   value={currentEdit.subject}
                   onChange={(e) => updateField("subject", e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-digital-red focus:outline-none"
                 />
               </div>
 
@@ -141,7 +141,7 @@ export function TemplateEditor({ journalId, templates }: { journalId: string; te
                   value={currentEdit.body}
                   onChange={(e) => updateField("body", e.target.value)}
                   rows={12}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm font-mono focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm font-mono focus:border-digital-red focus:outline-none"
                 />
               </div>
 
@@ -176,7 +176,7 @@ export function TemplateEditor({ journalId, templates }: { journalId: string; te
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="ml-auto rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors"
+                className="ml-auto rounded-lg bg-digital-red px-6 py-2.5 text-sm font-medium text-white hover:bg-cardinal disabled:opacity-50 transition-colors"
               >
                 {saving ? "Saving..." : "Save Template"}
               </button>

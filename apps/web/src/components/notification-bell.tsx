@@ -113,7 +113,7 @@ export function NotificationBell() {
           <path d="M13.73 21a2 2 0 0 1-3.46 0" />
         </svg>
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-brand-500 text-[10px] font-bold text-white">
+          <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-digital-red text-[10px] font-bold text-white">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
@@ -122,11 +122,11 @@ export function NotificationBell() {
       {open && (
         <div className="absolute right-0 top-full mt-2 w-80 rounded-xl border bg-white shadow-lg z-50">
           <div className="flex items-center justify-between border-b px-4 py-3">
-            <h3 className="text-sm font-heading font-semibold text-navy-950">Notifications</h3>
+            <h3 className="text-sm font-heading font-semibold text-cardinal">Notifications</h3>
             {unreadCount > 0 && (
               <button
                 onClick={markAllRead}
-                className="text-xs text-brand-500 hover:text-brand-700"
+                className="text-xs text-digital-red hover:text-cardinal-dark"
               >
                 Mark all read
               </button>
@@ -147,7 +147,7 @@ export function NotificationBell() {
                     }`}
                   >
                     {!n.read && (
-                      <span className="mt-1.5 h-2 w-2 rounded-full bg-brand-500 shrink-0" />
+                      <span className="mt-1.5 h-2 w-2 rounded-full bg-digital-red shrink-0" />
                     )}
                     <div className={!n.read ? "" : "ml-5"}>
                       <p className="text-sm font-medium text-gray-900">{n.title}</p>

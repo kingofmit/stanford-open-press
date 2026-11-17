@@ -1,6 +1,7 @@
 import { prisma } from "@stanford-press/database";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { BookOpen, FileText, Send } from "lucide-react";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -25,7 +26,6 @@ export default async function JournalHomePage({ params }: Params) {
         authors: { orderBy: { sortOrder: "asc" }, select: { givenName: true, familyName: true } },
       },
     });
-    // Sort by issue order
     const orderMap = new Map(latestIssue.articleIds.map((id, i) => [id, i]));
     articles.sort((a, b) => (orderMap.get(a.id) ?? 0) - (orderMap.get(b.id) ?? 0));
   } else {
@@ -39,25 +39,59 @@ export default async function JournalHomePage({ params }: Params) {
     });
   }
 
+  const totalArticles = await prisma.submission.count({
+    where: { journalId: journal.id, status: "Published" },
+  });
+
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
       {/* Journal description */}
       {journal.description && (
         <div className="mb-10 max-w-3xl">
-          <p className="text-gray-600 font-body leading-relaxed">{journal.description}</p>
+          <p className="text-gray-600 font-body text-lg leading-relaxed">{journal.description}</p>
         </div>
       )}
 
-      {/* Current Issue */}
+      {/* Quick stats bar */}
+      <div className="flex flex-wrap gap-6 mb-10 text-sm text-cool-grey">
+        <div className="flex items-center gap-2">
+          <BookOpen className="h-4 w-4" />
+          <span>{journal.peerReviewType.replace("-", " ")} peer review</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <FileText className="h-4 w-4" />
+          <span>{journal.licenseType}</span>
+        </div>
+        {journal.issn && (
+          <div>ISSN: {journal.issn}</div>
+        )}
+      </div>
+
+      {/* Current Issue / Recent Articles */}
       <section>
-        <h2 className="text-lg font-heading font-semibold text-navy-950 mb-6">
+        <h2 className="text-lg font-heading font-semibold text-cardinal mb-6">
           {latestIssue
             ? `${latestIssue.volume ? `Volume ${latestIssue.volume.number}, ` : ""}Issue ${latestIssue.number}${latestIssue.title ? `: ${latestIssue.title}` : ""}`
             : "Recent Articles"}
         </h2>
 
         {articles.length === 0 ? (
-          <p className="text-gray-400 py-8">No published articles yet.</p>
+          <div className="rounded-lg border-2 border-dashed border-gray-200 py-16 text-center">
+            <div className="flex justify-center mb-4">
+              <FileText className="h-12 w-12 text-gray-300" />
+            </div>
+            <h3 className="text-lg font-heading font-semibold text-gray-500">No published articles yet</h3>
+            <p className="mt-2 text-sm text-gray-400 max-w-sm mx-auto">
+              This journal is accepting submissions. Be among the first to publish.
+            </p>
+            <Link
+              href="/submissions/new"
+              className="mt-6 inline-flex items-center gap-2 rounded-md bg-digital-red px-5 py-2.5 text-sm font-semibold text-white hover:bg-cardinal transition-colors"
+            >
+              <Send className="h-4 w-4" />
+              Submit a Manuscript
+            </Link>
+          </div>
         ) : (
           <div className="space-y-6">
             {articles.map((article) => (
@@ -66,7 +100,7 @@ export default async function JournalHomePage({ params }: Params) {
                   href={`/${slug}/article/${article.id}`}
                   className="group"
                 >
-                  <h3 className="text-lg font-heading font-semibold text-navy-950 group-hover:text-brand-500 transition-colors">
+                  <h3 className="text-lg font-heading font-semibold text-cardinal group-hover:text-digital-red transition-colors">
                     {article.title}
                   </h3>
                 </Link>
@@ -84,7 +118,7 @@ export default async function JournalHomePage({ params }: Params) {
                       href={`https://doi.org/${article.doi}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-brand-500 transition-colors"
+                      className="hover:text-digital-red transition-colors"
                     >
                       DOI: {article.doi}
                     </a>

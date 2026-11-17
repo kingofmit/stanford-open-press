@@ -129,7 +129,7 @@ async function sendReviewerReminder(
     subject,
     html: `
       <div style="max-width: 600px; margin: 0 auto; font-family: sans-serif; color: #333;">
-        <div style="background: #1a1a2e; padding: 24px; text-align: center;">
+        <div style="background: #8C1515; padding: 24px; text-align: center;">
           <h1 style="color: white; font-size: 20px; margin: 0;">${escapeHtml(assignment.submission.journal.name)}</h1>
         </div>
         <div style="padding: 32px 24px;">
@@ -178,7 +178,7 @@ async function sendEditorEscalation(
       subject: `Review Overdue: ${daysOverdue} days \u2014 Action Required`,
       html: `
         <div style="max-width: 600px; margin: 0 auto; font-family: sans-serif; color: #333;">
-          <div style="background: #1a1a2e; padding: 24px; text-align: center;">
+          <div style="background: #8C1515; padding: 24px; text-align: center;">
             <h1 style="color: white; font-size: 20px; margin: 0;">${escapeHtml(assignment.submission.journal.name)}</h1>
           </div>
           <div style="padding: 32px 24px;">

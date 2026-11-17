@@ -30,7 +30,7 @@ export default async function IssuesPage({ params }: Params) {
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
-      <h1 className="text-2xl font-heading font-bold text-navy-950 mb-8">Archives</h1>
+      <h1 className="text-2xl font-heading font-bold text-cardinal mb-8">Archives</h1>
 
       {volumes.length === 0 && unassignedIssues.length === 0 ? (
         <p className="text-gray-400">No published issues yet.</p>
@@ -38,7 +38,7 @@ export default async function IssuesPage({ params }: Params) {
         <div className="space-y-8">
           {volumes.map((vol) => (
             <div key={vol.id}>
-              <h2 className="text-lg font-heading font-semibold text-navy-950 mb-3">
+              <h2 className="text-lg font-heading font-semibold text-cardinal mb-3">
                 Volume {vol.number} ({vol.year}){vol.title ? `: ${vol.title}` : ""}
               </h2>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -48,7 +48,7 @@ export default async function IssuesPage({ params }: Params) {
                     href={`/${slug}/issue/${issue.id}`}
                     className="rounded-lg border p-4 hover:shadow-md transition-shadow"
                   >
-                    <p className="font-heading font-medium text-navy-950">
+                    <p className="font-heading font-medium text-cardinal">
                       Issue {issue.number}{issue.title ? `: ${issue.title}` : ""}
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
@@ -63,7 +63,7 @@ export default async function IssuesPage({ params }: Params) {
 
           {unassignedIssues.length > 0 && (
             <div>
-              <h2 className="text-lg font-heading font-semibold text-navy-950 mb-3">Issues</h2>
+              <h2 className="text-lg font-heading font-semibold text-cardinal mb-3">Issues</h2>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {unassignedIssues.map((issue) => (
                   <Link
@@ -71,7 +71,7 @@ export default async function IssuesPage({ params }: Params) {
                     href={`/${slug}/issue/${issue.id}`}
                     className="rounded-lg border p-4 hover:shadow-md transition-shadow"
                   >
-                    <p className="font-heading font-medium text-navy-950">
+                    <p className="font-heading font-medium text-cardinal">
                       Issue {issue.number}{issue.title ? `: ${issue.title}` : ""}
                     </p>
                     <p className="text-xs text-gray-400 mt-1">

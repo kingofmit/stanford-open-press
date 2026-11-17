@@ -1,6 +1,7 @@
 import { prisma } from "@stanford-press/database";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { FileText } from "lucide-react";
 import type { Metadata } from "next";
 
 type Params = { params: Promise<{ slug: string; articleId: string }> };
@@ -80,7 +81,7 @@ export default async function ArticlePage({ params }: Params) {
       {/* Article header */}
       <article>
         <header className="mb-8">
-          <h1 className="text-2xl font-heading font-bold text-navy-950 leading-tight sm:text-3xl">
+          <h1 className="text-2xl font-heading font-bold text-cardinal leading-tight sm:text-3xl">
             {article.title}
           </h1>
 
@@ -89,7 +90,7 @@ export default async function ArticlePage({ params }: Params) {
               <span key={i} className="text-sm text-gray-700">
                 {i > 0 && ", "}
                 <span className="font-medium">{author.givenName} {author.familyName}</span>
-                {author.corresponding && <sup className="text-brand-500 ml-0.5">*</sup>}
+                {author.corresponding && <sup className="text-digital-red ml-0.5">*</sup>}
                 {author.affiliation && (
                   <span className="text-gray-400"> ({author.affiliation})</span>
                 )}
@@ -117,7 +118,7 @@ export default async function ArticlePage({ params }: Params) {
                 href={`https://doi.org/${article.doi}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-brand-500 hover:text-brand-700 transition-colors"
+                className="text-digital-red hover:text-cardinal-dark transition-colors"
               >
                 https://doi.org/{article.doi}
               </a>
@@ -137,7 +138,7 @@ export default async function ArticlePage({ params }: Params) {
               href={`/api/files/${pdfFile.storagePath}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
+              className="rounded-lg bg-digital-red px-4 py-2 text-sm font-medium text-white hover:bg-cardinal transition-colors"
             >
               Download PDF
             </a>
@@ -188,9 +189,9 @@ export default async function ArticlePage({ params }: Params) {
                   href={`/api/files/${f.storagePath}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-brand-500 hover:text-brand-700 transition-colors"
+                  className="flex items-center gap-2 text-sm text-digital-red hover:text-cardinal-dark transition-colors"
                 >
-                  &#128196; {f.filename}
+                  <FileText className="h-4 w-4 inline shrink-0" /> {f.filename}
                 </a>
               ))}
             </div>
@@ -227,7 +228,7 @@ export default async function ArticlePage({ params }: Params) {
             <div>
               <h3 className="font-heading font-semibold text-gray-900 mb-1">Corresponding Author</h3>
               {article.authors.filter((a) => a.corresponding).map((a, i) => (
-                <p key={i}>{a.givenName} {a.familyName} — <a href={`mailto:${a.email}`} className="text-brand-500">{a.email}</a></p>
+                <p key={i}>{a.givenName} {a.familyName} — <a href={`mailto:${a.email}`} className="text-digital-red">{a.email}</a></p>
               ))}
             </div>
           )}

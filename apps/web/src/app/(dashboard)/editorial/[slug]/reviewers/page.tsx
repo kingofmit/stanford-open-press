@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { prisma } from "@stanford-press/database";
 import Link from "next/link";
 import { ReviewerPoolClient } from "./reviewer-pool-client";
+import { StanfordBar } from "@/components/app-header";
+import { EditorialNav } from "@/components/editorial-nav";
 
 export const metadata = { title: "Reviewer Pool" };
 
@@ -69,22 +71,24 @@ export default async function ReviewerPoolPage({ params }: Params) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <StanfordBar />
       <header className="border-b bg-white">
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex items-center gap-2 text-sm text-gray-500">
-            <Link href={`/editorial/${slug}`} className="hover:text-navy-950">{journal.name}</Link>
+            <Link href={`/editorial/${slug}`} className="hover:text-cardinal">{journal.name}</Link>
             <span>/</span>
-            <span className="text-navy-950">Reviewer Pool</span>
+            <span className="text-cardinal">Reviewer Pool</span>
           </div>
         </div>
       </header>
+      <EditorialNav slug={slug} active="reviewers" />
 
       <main className="mx-auto max-w-7xl px-6 py-8">
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="rounded-xl border bg-white p-4">
             <p className="text-xs text-gray-500">Total Reviewers</p>
-            <p className="text-2xl font-heading font-bold text-navy-950">{totalReviewers}</p>
+            <p className="text-2xl font-heading font-bold text-cardinal">{totalReviewers}</p>
           </div>
           <div className="rounded-xl border bg-white p-4">
             <p className="text-xs text-gray-500">Available</p>
@@ -92,7 +96,7 @@ export default async function ReviewerPoolPage({ params }: Params) {
           </div>
           <div className="rounded-xl border bg-white p-4">
             <p className="text-xs text-gray-500">Avg Reviews/Reviewer</p>
-            <p className="text-2xl font-heading font-bold text-navy-950">{avgCompleted}</p>
+            <p className="text-2xl font-heading font-bold text-cardinal">{avgCompleted}</p>
           </div>
         </div>
 

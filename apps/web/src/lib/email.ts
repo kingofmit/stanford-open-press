@@ -122,7 +122,7 @@ export async function sendTemplatedEmail(options: {
 
   const html = `
     <div style="max-width: 600px; margin: 0 auto; font-family: 'Helvetica Neue', Arial, sans-serif; color: #333; line-height: 1.6;">
-      <div style="background: #1a1a2e; padding: 24px; text-align: center;">
+      <div style="background: #8C1515; padding: 24px; text-align: center;">
         <h1 style="color: white; font-size: 20px; margin: 0;">${escapeHtml(variables.journalName || "Stanford Open Press")}</h1>
       </div>
       <div style="padding: 32px 24px; background: #ffffff;">
@@ -210,7 +210,7 @@ export async function notifyEditorsNewSubmission(submissionId: string): Promise<
         subject: `New Submission: ${submission.title}`,
         html: `
           <div style="max-width: 600px; margin: 0 auto; font-family: sans-serif; color: #333;">
-            <div style="background: #1a1a2e; padding: 24px; text-align: center;">
+            <div style="background: #8C1515; padding: 24px; text-align: center;">
               <h1 style="color: white; font-size: 20px; margin: 0;">${escapeHtml(submission.journal.name)}</h1>
             </div>
             <div style="padding: 32px 24px;">

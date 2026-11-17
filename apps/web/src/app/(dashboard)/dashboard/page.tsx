@@ -3,7 +3,9 @@ import { redirect } from "next/navigation";
 import { prisma } from "@stanford-press/database";
 import Link from "next/link";
 import { StatusBadge } from "@/components/status-badge";
+import { FileEdit } from "lucide-react";
 import { NotificationBell } from "@/components/notification-bell";
+import { AppHeader } from "@/components/app-header";
 
 export const metadata = { title: "Dashboard" };
 
@@ -61,32 +63,30 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="border-b bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/dashboard" className="text-lg font-heading font-bold text-navy-950">
+      <AppHeader>
+          <Link href="/dashboard" className="text-lg font-heading font-bold text-cardinal">
             Stanford Open Press
           </Link>
           <div className="flex items-center gap-3">
             {editorJournals.length > 0 && (
               <Link
                 href={`/editorial/${editorJournals[0].slug}`}
-                className="hidden text-sm text-gray-500 hover:text-navy-950 transition-colors sm:block"
+                className="hidden text-sm text-gray-500 hover:text-cardinal transition-colors sm:block"
               >
                 Editorial
               </Link>
             )}
             <NotificationBell />
-            <Link href="/profile" className="text-sm text-gray-400 hover:text-navy-950 transition-colors">
+            <Link href="/profile" className="text-sm text-gray-400 hover:text-cardinal transition-colors">
               {user?.name}
             </Link>
           </div>
-        </div>
-      </header>
+      </AppHeader>
 
       <main className="mx-auto max-w-7xl px-6 py-8">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-heading font-bold text-navy-950">
+            <h1 className="text-2xl font-heading font-bold text-cardinal">
               My Submissions
             </h1>
             <p className="text-sm text-gray-500 mt-1">
@@ -95,7 +95,7 @@ export default async function DashboardPage() {
           </div>
           <Link
             href="/submissions/new"
-            className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
+            className="rounded-lg bg-digital-red px-4 py-2 text-sm font-medium text-white hover:bg-cardinal transition-colors"
           >
             New Submission
           </Link>
@@ -115,7 +115,7 @@ export default async function DashboardPage() {
                   className="flex items-center justify-between rounded-xl border-2 border-orange-200 bg-orange-50 p-4 hover:bg-orange-100 transition-colors"
                 >
                   <div>
-                    <p className="font-heading font-semibold text-navy-950">{sub.title}</p>
+                    <p className="font-heading font-semibold text-cardinal">{sub.title}</p>
                     <p className="text-xs text-gray-500 mt-0.5">
                       {sub.journal.name} &middot; Updated {timeAgo(sub.updatedAt)}
                     </p>
@@ -144,7 +144,7 @@ export default async function DashboardPage() {
                   className="flex items-center justify-between rounded-xl border bg-white p-4 hover:shadow-md transition-shadow"
                 >
                   <div>
-                    <p className="font-heading font-medium text-navy-950">{sub.title}</p>
+                    <p className="font-heading font-medium text-cardinal">{sub.title}</p>
                     <p className="text-xs text-gray-400 mt-0.5">
                       {sub.journal.name} &middot; {sub.authors.map((a) => `${a.givenName} ${a.familyName}`).join(", ")}
                       {sub._count.reviews > 0 && ` \u00b7 ${sub._count.reviews} reviews`}
@@ -174,7 +174,7 @@ export default async function DashboardPage() {
                   className="flex items-center justify-between rounded-xl border bg-white p-4 hover:shadow-md transition-shadow opacity-75"
                 >
                   <div>
-                    <p className="font-heading font-medium text-navy-950">{sub.title}</p>
+                    <p className="font-heading font-medium text-cardinal">{sub.title}</p>
                     <p className="text-xs text-gray-400 mt-0.5">
                       {sub.journal.name}
                       {sub.doi && ` \u00b7 DOI: ${sub.doi}`}
@@ -189,14 +189,14 @@ export default async function DashboardPage() {
 
         {submissions.length === 0 && (
           <div className="rounded-xl border-2 border-dashed border-gray-200 p-12 text-center">
-            <div className="text-4xl mb-4">&#128221;</div>
+            <div className="mb-4 flex justify-center"><FileEdit className="h-10 w-10 text-gray-400" /></div>
             <h3 className="text-lg font-heading font-semibold text-gray-900">No submissions yet</h3>
             <p className="mt-2 text-sm text-gray-500">
               Start by submitting your first manuscript.
             </p>
             <Link
               href="/submissions/new"
-              className="mt-4 inline-block rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
+              className="mt-4 inline-block rounded-lg bg-digital-red px-6 py-2.5 text-sm font-medium text-white hover:bg-cardinal transition-colors"
             >
               Submit a Manuscript
             </Link>

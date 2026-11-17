@@ -72,7 +72,7 @@ export function ReviewerPoolClient({
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by name, email, affiliation, or expertise..."
           aria-label="Search reviewers"
-          className="flex-1 min-w-[300px] rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-brand-500 focus:outline-none"
+          className="flex-1 min-w-[300px] rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-digital-red focus:outline-none"
         />
         <label htmlFor="available-filter" className="flex items-center gap-2 text-sm text-gray-600">
           <input
@@ -80,7 +80,7 @@ export function ReviewerPoolClient({
             type="checkbox"
             checked={filterAvailable}
             onChange={(e) => setFilterAvailable(e.target.checked)}
-            className="accent-brand-500"
+            className="accent-digital-red"
           />
           Available only
         </label>
@@ -113,7 +113,7 @@ export function ReviewerPoolClient({
             <div className="flex items-start justify-between">
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-heading font-semibold text-navy-950">{reviewer.name}</h3>
+                  <h3 className="font-heading font-semibold text-cardinal">{reviewer.name}</h3>
                   {reviewer.reviewerAvailable ? (
                     <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-700">Available</span>
                   ) : (
@@ -143,23 +143,23 @@ export function ReviewerPoolClient({
               {/* Stats */}
               <div className="flex gap-6 text-center shrink-0">
                 <div>
-                  <p className="text-lg font-heading font-bold text-navy-950">{reviewer.totalCompleted}</p>
+                  <p className="text-lg font-heading font-bold text-cardinal">{reviewer.totalCompleted}</p>
                   <p className="text-xs text-gray-400">Reviews</p>
                 </div>
                 {reviewer.qualityScore && (
                   <div>
-                    <p className="text-lg font-heading font-bold text-navy-950">{Math.round(reviewer.qualityScore)}</p>
+                    <p className="text-lg font-heading font-bold text-cardinal">{Math.round(reviewer.qualityScore)}</p>
                     <p className="text-xs text-gray-400">Quality</p>
                   </div>
                 )}
                 {reviewer.avgResponseDays && (
                   <div>
-                    <p className="text-lg font-heading font-bold text-navy-950">{Math.round(reviewer.avgResponseDays)}</p>
+                    <p className="text-lg font-heading font-bold text-cardinal">{Math.round(reviewer.avgResponseDays)}</p>
                     <p className="text-xs text-gray-400">Avg Days</p>
                   </div>
                 )}
                 <div>
-                  <p className="text-lg font-heading font-bold text-navy-950">
+                  <p className="text-lg font-heading font-bold text-cardinal">
                     {reviewer.totalCompleted + reviewer.totalDeclined > 0
                       ? Math.round((reviewer.totalCompleted / (reviewer.totalCompleted + reviewer.totalDeclined)) * 100)
                       : "\u2014"}
@@ -174,7 +174,9 @@ export function ReviewerPoolClient({
 
         {filtered.length === 0 && (
           <div className="text-center py-12 text-gray-400">
-            No reviewers match your search criteria.
+            {reviewers.length === 0
+              ? "No reviewers in the pool yet. Reviewers are added when they are assigned a role on this journal."
+              : "No reviewers match your search criteria."}
           </div>
         )}
       </div>

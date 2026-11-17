@@ -289,11 +289,11 @@ describe("DEFAULT_WIZARD_STEPS", () => {
 
 describe("DEFAULT_THEME", () => {
   it("has a primary color", () => {
-    expect(DEFAULT_THEME.primaryColor).toBe("#1a1a2e");
+    expect(DEFAULT_THEME.primaryColor).toBe("#8C1515");
   });
 
   it("has an accent color", () => {
-    expect(DEFAULT_THEME.accentColor).toBe("#e94560");
+    expect(DEFAULT_THEME.accentColor).toBe("#B1040E");
   });
 
   it("has heading and body fonts", () => {

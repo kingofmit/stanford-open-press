@@ -31,10 +31,10 @@ model Journal {
   apcCurrency     String @default("USD")
 
   // Theme
-  primaryColor String @default("#1a1a2e")
-  accentColor  String @default("#e94560")
-  headingFont  String @default("Inter")
-  bodyFont     String @default("Source Serif Pro")
+  primaryColor String @default("#8C1515")
+  accentColor  String @default("#B1040E")
+  headingFont  String @default("Source Sans 3")
+  bodyFont     String @default("Source Serif 4")
 
   sections       JournalSection[]
   submissions    Submission[]
