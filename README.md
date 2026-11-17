@@ -7,157 +7,210 @@
   <a href="https://www.npmjs.com/package/@stanford-press/core"><img src="https://img.shields.io/npm/v/@stanford-press/core.svg" alt="npm version" /></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" /></a>
   <img src="https://img.shields.io/badge/typescript-strict-blue" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/next.js-16-black" alt="Next.js 16" />
+  <img src="https://img.shields.io/badge/next.js-15-black" alt="Next.js 15" />
   <img src="https://img.shields.io/badge/react-19-61dafb" alt="React 19" />
 </p>
 
 The modern, AI-powered scholarly publishing platform. Beautiful journals, frictionless peer review, and intelligent editorial workflows — built for the future of open science.
 
-## Features
+---
 
-- **AI Reviewer Matching** — Analyze abstracts and match against reviewer expertise using embeddings
-- **Automated Desk Review** — Scope check, completeness validation, and duplicate detection
-- **Smart Formatting** — Detect citation style issues and check reference completeness
-- **DOI Registration** — Crossref and DataCite integration for persistent identifiers
-- **JATS XML** — Generate standards-compliant XML for indexing and archival
-- **Beautiful Default Theme** — Mobile-first, accessible journal theme built on Allem UI
-- **Mobile-First** — Responsive design for readers, reviewers, and editors
-- **OJS Migration Tool** — Import your entire journal from OJS 3.x in minutes
+## Why Stanford Open Press?
 
-## Stanford Open Press vs OJS
+OJS has 34,000 journals — and 7-8 minute page loads, multi-week upgrade outages, and zero AI. Scholastica costs $10/submission. ScholarOne costs $50k/year.
 
-| Feature | Stanford Open Press | OJS 3.x |
-|---------|-------------------|---------|
-| **Stack** | Next.js 16, React 19, TypeScript | PHP 8, jQuery, Smarty |
-| **UI Framework** | Allem UI (modern components) | Bootstrap 3 (legacy) |
-| **AI Features** | Reviewer matching, desk review, formatting | None |
-| **Mobile Support** | Mobile-first responsive | Basic responsive |
-| **Performance** | Edge-ready, static generation | Server-rendered PHP |
-| **Setup Time** | Minutes (npm install) | Hours (LAMP stack) |
-| **API** | TypeScript SDK, REST + GraphQL | REST (limited) |
-| **Theme System** | React components, dark mode | PHP templates |
-| **Multi-Journal** | Built-in, first-class | Plugin-based |
-| **Review Types** | Single-blind, double-blind, open | Single-blind, double-blind |
+Stanford Open Press is the open-source alternative: a full editorial workflow from submission to publication, with AI reviewer matching, automated desk review, Crossref DOI registration, Google Scholar indexing, and OJS migration — in one modern platform.
 
-## Packages
-
-| Package | Description |
-|---------|-------------|
-| [`@stanford-press/core`](./packages/core) | Journal configuration, roles, permissions, and event system |
-| [`@stanford-press/submissions`](./packages/submissions) | Submission workflow state machine and file management |
-| [`@stanford-press/review`](./packages/review) | Peer review management, forms, and reviewer tracking |
-| [`@stanford-press/editorial`](./packages/editorial) | Editorial workflow, copyediting, and production pipeline |
-| [`@stanford-press/publish`](./packages/publish) | DOI registration, JATS XML, citation export, OAI-PMH |
-| [`@stanford-press/ai`](./packages/ai) | AI reviewer matching, desk review, and formatting agents |
-| [`@stanford-press/ui`](./packages/ui) | Journal theme components built on Allem UI |
-| [`@stanford-press/migrate`](./packages/migrate) | OJS 3.x database importer with rollback support |
+| | Stanford Open Press | OJS 3.x |
+|---|---|---|
+| **Stack** | Next.js 15, React 19, TypeScript | PHP 8, jQuery, Smarty |
+| **Performance** | Instant — SSR + RSC | 7-8 min search queries |
+| **AI Features** | Reviewer matching, desk review, LLM analysis | None |
+| **Setup** | `pnpm install && pnpm dev` | LAMP stack, hours of config |
+| **Mobile** | Responsive, mobile-first | Basic |
+| **DOI** | Built-in Crossref deposit | Plugin required |
+| **Indexing** | Google Scholar, DOAJ, OAI-PMH built-in | Manual configuration |
+| **Migration** | One-command OJS import | N/A |
 
 ## Quick Start
 
 ```bash
-# Install all packages
-npm install @stanford-press/core @stanford-press/submissions @stanford-press/review @stanford-press/editorial @stanford-press/publish
+# Prerequisites: Node.js >= 20, pnpm >= 9, PostgreSQL
 
-# Configure your journal
-import { createJournal } from "@stanford-press/core";
+git clone https://github.com/kingofmit/stanford-open-press.git
+cd stanford-open-press
+pnpm install
 
-const journal = createJournal({
-  name: "Journal of Open Science",
-  issn: "1234-5678",
-  doiPrefix: "10.1234",
-  sections: ["Research Articles", "Reviews", "Short Communications"],
-});
+# Set up the database
+cp packages/database/.env.example packages/database/.env
+cp apps/web/.env.local.example apps/web/.env.local
+# Edit .env files with your PostgreSQL URL
 
-# Start the editorial workflow
-import { createSubmission } from "@stanford-press/submissions";
-import { assignReviewers } from "@stanford-press/review";
+pnpm --filter @stanford-press/database db:push
+pnpm --filter @stanford-press/database db:seed
 
-const submission = createSubmission({
-  journalId: journal.id,
-  title: "A Novel Approach to Open Access Publishing",
-  abstract: "We present a modern platform for scholarly communication...",
-  authors: [{ name: "Jane Doe", email: "jane@university.edu", affiliation: "MIT" }],
-});
+# Start development
+pnpm dev
+# → http://localhost:3000
 ```
 
 ## Architecture
 
-Stanford Open Press is built as a modular Turborepo monorepo. Each package handles one concern:
-
 ```
-@stanford-press/core          Journal config, roles, permissions
-        |
-@stanford-press/submissions   Submission intake & state machine
-        |
-@stanford-press/review        Peer review assignment & tracking
-        |
-@stanford-press/editorial     Editorial decisions & production
-        |
-@stanford-press/publish       DOI minting, JATS XML, indexing
-        |
-@stanford-press/ai            AI features (matching, desk review)
-@stanford-press/ui            Reader & editor UI components
-@stanford-press/migrate       OJS migration tools
+stanford-open-press/
+├── apps/
+│   └── web/                    Next.js 15 web application
+│       ├── src/app/            Pages & API routes (35 routes, 24 pages)
+│       ├── src/lib/            Core services (auth, email, storage, AI, citations)
+│       └── src/components/     Shared UI components
+├── packages/
+│   ├── core/                   Journal config, roles, permissions, event bus
+│   ├── database/               Prisma schema (25 models), client, seed
+│   ├── submissions/            Submission workflow state machine
+│   ├── review/                 Peer review forms, scoring, assignments
+│   ├── editorial/              Decisions, copyediting, production pipeline
+│   ├── publish/                DOI, JATS XML, citations, OAI-PMH
+│   ├── ai/                     Reviewer matching, desk review, formatting
+│   ├── ui/                     Theme utilities, component types
+│   └── migrate/                OJS 3.x MySQL importer with CLI
+└── turbo.json                  Turborepo orchestration
 ```
 
-The workflow flows from submission through review to publication, with AI augmenting each stage. The UI package provides React components for building the front-end, and the migrate package handles importing data from legacy systems.
+**Tech stack:** Next.js 15 (App Router) · React 19 · TypeScript 5.8 (strict) · Prisma 6 · PostgreSQL · NextAuth v5 · Tailwind CSS · Turborepo · pnpm · Vitest
 
-## For Editors
+## Features
 
-Editors get a dashboard showing all submissions organized by workflow stage. Assign reviewers with AI-powered matching, make editorial decisions, and track the entire pipeline from submission to publication. Customizable email templates keep authors and reviewers informed at every step.
+### For Authors
+- **6-step submission wizard** — guided flow with auto-save, drag-and-drop file upload, ORCID auto-fill
+- **Real-time status tracking** — always know where your paper is, no need to email the editor
+- **Revision management** — see reviewer comments as a checklist, upload revisions with response letter
 
-## For Reviewers
+### For Editors
+- **Editorial dashboard** — action-required queue, overdue reviews, pipeline overview, analytics
+- **AI desk review** — automated 10-point screening catches scope mismatches, missing ethics, incomplete metadata
+- **AI reviewer matching** — 5-dimension scoring (expertise, reliability, workload, recency, experience) with conflict-of-interest detection
+- **LLM-powered analysis** — connect Anthropic or OpenAI for real scope evaluation, methodology screening, and language assessment
+- **One-click decisions** — see all reviews side-by-side, write decision letter, set revision deadlines
+- **Production pipeline** — 6-step workflow from copyediting to DOI registration with progress tracking
+- **Journal settings** — theme customization (colors, fonts), email templates with live preview, editorial analytics
 
-Reviewers receive invitations with one-click accept/decline. The review interface presents the manuscript alongside a customizable review form with scoring rubrics. Deadline reminders and AI-powered smart notifications help keep reviews on track.
+### For Reviewers
+- **Email-based invitations** — accept or decline from email, no login needed to decline
+- **Scored review form** — criteria with weights, comments to author and editor, recommendation
+- **Deadline reminders** — 7-day warning, due-today, 3/7/14-day overdue with editor escalation
 
-## For Authors
+### Publishing & Indexing
+- **Crossref DOI deposit** — XML 5.3.1, automatic registration on publish
+- **Google Scholar** — Highwire Press meta tags on every article page
+- **DOAJ / OAI-PMH** — built-in OAI-PMH 2.0 endpoint for harvesters
+- **JATS XML** — Publishing DTD v1.3 for PubMed/PMC deposit
+- **Citations** — export in BibTeX, RIS, APA, MLA, Chicago
+- **PDF generation** — branded article PDFs via Puppeteer (HTML fallback)
+- **RSS feeds** — per-journal RSS 2.0 with Dublin Core metadata
+- **Sitemap** — dynamic sitemap.xml with all published content
 
-Authors submit manuscripts through a guided multi-step wizard. Track submission status in real time, respond to reviewer comments, upload revised manuscripts, and proof galleys — all from a clean, modern dashboard.
+### Migration
+- **OJS 3.x import** — connect to OJS MySQL, analyze, migrate journals/submissions/users/reviews/issues
+- **CLI tool** — `npx @stanford-press/migrate analyze --database ojs --user root`
+- **Rollback support** — 7-day rollback window with full ID mapping
 
-## Tech Stack
+## Packages
 
-- [Next.js 16](https://nextjs.org/) — App Router, Turbopack
-- [React 19](https://react.dev/) — Server and client components
-- [Allem UI](https://github.com/kingofmit/allem-ui) — Component library
-- [Allem SDK](https://github.com/kingofmit/allem-sdk) — Developer SDK (hooks, AI, forms)
-- [Prisma](https://www.prisma.io/) — Database ORM
-- [PostgreSQL](https://www.postgresql.org/) — Primary database
-- [Vercel AI SDK](https://sdk.vercel.ai/) — AI features
-- [TypeScript](https://www.typescriptlang.org/) — Strict mode throughout
-- [Turborepo](https://turbo.build/) + [pnpm](https://pnpm.io/) — Monorepo tooling
-- [tsup](https://tsup.egoist.dev/) — ESM + CJS builds
-- [Changesets](https://github.com/changesets/changesets) — Versioning
+| Package | Description | Tests |
+|---|---|---|
+| [`@stanford-press/core`](./packages/core) | Journal config, roles & permissions, event bus | 75 |
+| [`@stanford-press/database`](./packages/database) | Prisma schema (25 models, 11 enums), client, seed | — |
+| [`@stanford-press/submissions`](./packages/submissions) | Submission workflow state machine, file management | 64 |
+| [`@stanford-press/review`](./packages/review) | Review forms, scoring, assignments, deadlines | 32 |
+| [`@stanford-press/editorial`](./packages/editorial) | Decisions, copyediting, production pipeline, templates | 60 |
+| [`@stanford-press/publish`](./packages/publish) | DOI, JATS XML, citations (5 formats), OAI-PMH | 79 |
+| [`@stanford-press/ai`](./packages/ai) | Reviewer matching, desk review, abstract scoring | 55 |
+| [`@stanford-press/ui`](./packages/ui) | Theme utilities, wizard validation, formatting | 43 |
+| [`@stanford-press/migrate`](./packages/migrate) | OJS 3.x MySQL importer with analyze/execute CLI | 51 |
+| [`@stanford-press/web`](./apps/web) | Next.js 15 web app (35 API routes, 24 pages) | 67 |
 
-## Migration
+**Total: 526 tests across 27 test files**
 
-Coming from OJS? Import your entire journal in minutes:
+## API Routes
 
-```typescript
-import { OJSImporter } from "@stanford-press/migrate";
+### Journals
+| Method | Route | Description |
+|---|---|---|
+| GET/POST | `/api/journals` | List and create journals |
+| GET/PATCH | `/api/journals/[id]` | Get and update journal |
+| GET/POST/DELETE | `/api/journals/[id]/roles` | Manage role assignments |
+| GET/POST | `/api/journals/[id]/sections` | Manage sections |
+| GET/POST | `/api/journals/[id]/volumes` | Manage volumes |
+| GET/POST | `/api/journals/[id]/issues` | Manage issues |
+| GET/PATCH | `/api/journals/[id]/issues/[id]` | Issue detail and article assignment |
+| POST | `/api/journals/[id]/issues/[id]/publish` | Publish an issue |
+| PATCH | `/api/journals/[id]/templates/[id]` | Edit email templates |
+| GET | `/api/journals/[id]/oai` | OAI-PMH 2.0 endpoint |
 
-const importer = new OJSImporter({
-  source: { host: "localhost", database: "ojs", user: "ojs", password: "***" },
-});
+### Submissions
+| Method | Route | Description |
+|---|---|---|
+| GET/POST | `/api/submissions` | List and create submissions |
+| GET/PATCH | `/api/submissions/[id]` | Get and update submission |
+| POST | `/api/submissions/[id]/submit` | Submit for review |
+| POST | `/api/submissions/[id]/status` | Editor status transitions |
+| GET/POST/PUT/DELETE | `/api/submissions/[id]/authors` | Author management |
+| GET/POST/DELETE | `/api/submissions/[id]/files` | File upload and management |
+| POST | `/api/submissions/[id]/decision` | Editorial decision |
+| GET/POST | `/api/submissions/[id]/reviews` | List and invite reviewers |
+| GET/POST | `/api/submissions/[id]/desk-review` | AI desk review |
+| GET | `/api/submissions/[id]/match-reviewers` | AI reviewer matching |
+| GET/POST/PATCH | `/api/submissions/[id]/copyedit` | Copyediting workflow |
+| GET/POST/PATCH | `/api/submissions/[id]/production` | Production pipeline |
 
-const plan = await importer.analyze();
-console.log(`Found ${plan.journals} journals, ${plan.submissions} submissions, ${plan.users} users`);
+### Reviews
+| Method | Route | Description |
+|---|---|---|
+| GET/POST | `/api/reviews/respond` | Token-based accept/decline |
+| GET | `/api/reviews/[id]` | Get review assignment with form |
+| POST | `/api/reviews/[id]/submit` | Submit completed review |
+| POST | `/api/reviews/[id]/cancel` | Cancel review assignment |
 
-const report = await importer.execute(plan);
-console.log(`Migrated: ${report.success} records, ${report.warnings} warnings`);
-```
+### Articles & Users
+| Method | Route | Description |
+|---|---|---|
+| GET | `/api/articles/[id]/cite` | Citation export (BibTeX/RIS/APA/MLA/Chicago) |
+| GET | `/api/articles/[id]/jats` | JATS XML download |
+| GET | `/api/articles/[id]/pdf` | PDF generation |
+| GET | `/api/search` | Full-text article search |
+| GET | `/api/users/me` | Current user profile |
+| PATCH | `/api/users/me/update` | Update profile |
+| POST | `/api/cron/reminders` | Process deadline reminders |
+
+## Environment Variables
+
+See [`apps/web/.env.local.example`](./apps/web/.env.local.example) for all configuration options:
+
+| Variable | Required | Description |
+|---|---|---|
+| `DATABASE_URL` | Yes | PostgreSQL connection string |
+| `NEXTAUTH_URL` | Yes | App URL (e.g., `http://localhost:3000`) |
+| `NEXTAUTH_SECRET` | Yes | Random secret for session encryption |
+| `ORCID_CLIENT_ID` | No | ORCID OAuth client ID |
+| `RESEND_API_KEY` | No | Resend API key for transactional email |
+| `ANTHROPIC_API_KEY` | No | Anthropic API key for LLM features |
+| `OPENAI_API_KEY` | No | OpenAI API key for LLM/embeddings |
+| `CROSSREF_USERNAME` | No | Crossref deposit credentials |
+| `S3_BUCKET` | No | S3 bucket for file storage (defaults to local) |
+| `CRON_SECRET` | No | Secret for cron endpoint authentication |
 
 ## Development
 
 ```bash
-git clone https://github.com/kingofmit/stanford-open-press.git
-cd stanford-open-press
-pnpm install
-pnpm build
-pnpm test
+pnpm install          # Install dependencies
+pnpm build            # Build all packages
+pnpm test             # Run 526 tests
+pnpm dev              # Start dev server with hot reload
+pnpm clean            # Clean all dist directories
 ```
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for more details.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed development guide.
 
 ## License
 
-[MIT](./LICENSE) - [Ahmed Allem](https://kingallem.com)
+[MIT](./LICENSE) — [Ahmed Allem](https://kingallem.com)
