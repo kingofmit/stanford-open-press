@@ -440,7 +440,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                     )}
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <input
                     type="text" placeholder="Given name *" value={author.givenName}
                     onChange={(e) => updateAuthor(i, "givenName", e.target.value)}
@@ -464,7 +464,7 @@ export function SubmissionWizard({ journals, defaultJournalId, userName, userEma
                   <input
                     type="text" placeholder="ORCID (0000-0000-0000-0000)" value={author.orcid}
                     onChange={(e) => updateAuthor(i, "orcid", e.target.value)}
-                    className="col-span-2 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                    className="sm:col-span-2 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
                   />
                 </div>
               </div>

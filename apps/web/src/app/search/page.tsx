@@ -1,132 +1,162 @@
-import Link from "next/link";
 import { prisma } from "@stanford-press/database";
+import Link from "next/link";
+import { GlobalSearchForm } from "./search-form";
 
-export const metadata = { title: "Search — Stanford Open Press" };
+export const metadata = { title: "Search" };
 
-export default async function SearchPage({
+export default async function GlobalSearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; journal?: string; page?: string }>;
+  searchParams: Promise<{ q?: string; page?: string; journalId?: string }>;
 }) {
-  const { q, journal, page: pageStr } = await searchParams;
-  const query = q || "";
+  const { q, page: pageStr, journalId } = await searchParams;
   const page = parseInt(pageStr || "1") || 1;
-
-  let results: any[] = [];
-  let total = 0;
-  let pages = 0;
-
-  if (query.trim()) {
-    const where: Record<string, unknown> = {
-      status: "Published",
-      OR: [
-        { title: { contains: query, mode: "insensitive" } },
-        { abstract: { contains: query, mode: "insensitive" } },
-        { keywords: { hasSome: query.toLowerCase().split(/\s+/) } },
-      ],
-    };
-
-    if (journal) {
-      const j = await prisma.journal.findUnique({ where: { slug: journal }, select: { id: true } });
-      if (j) where.journalId = j.id;
-    }
-
-    [results, total] = await Promise.all([
-      prisma.submission.findMany({
-        where: where as any,
-        select: {
-          id: true, title: true, abstract: true, keywords: true, doi: true,
-          publishedAt: true,
-          authors: { orderBy: { sortOrder: "asc" }, select: { givenName: true, familyName: true } },
-          journal: { select: { name: true, slug: true } },
-        },
-        orderBy: { publishedAt: "desc" },
-        skip: (page - 1) * 20,
-        take: 20,
-      }),
-      prisma.submission.count({ where: where as any }),
-    ]);
-    pages = Math.ceil(total / 20);
-  }
+  const limit = 20;
 
   const journals = await prisma.journal.findMany({
-    select: { slug: true, name: true },
+    select: { id: true, name: true, slug: true },
     orderBy: { name: "asc" },
   });
 
+  let results: any[] = [];
+  let total = 0;
+
+  if (q && q.length >= 2) {
+    const where: Record<string, unknown> = {
+      status: "Published" as const,
+      OR: [
+        { title: { contains: q, mode: "insensitive" as const } },
+        { abstract: { contains: q, mode: "insensitive" as const } },
+        { keywords: { has: q } },
+        {
+          authors: {
+            some: {
+              OR: [
+                { givenName: { contains: q, mode: "insensitive" as const } },
+                { familyName: { contains: q, mode: "insensitive" as const } },
+              ],
+            },
+          },
+        },
+      ],
+    };
+
+    if (journalId) where.journalId = journalId;
+
+    [results, total] = await Promise.all([
+      prisma.submission.findMany({
+        where,
+        select: {
+          id: true,
+          title: true,
+          abstract: true,
+          keywords: true,
+          doi: true,
+          publishedAt: true,
+          volume: true,
+          issue: true,
+          journal: { select: { name: true, slug: true } },
+          authors: {
+            orderBy: { sortOrder: "asc" },
+            select: { givenName: true, familyName: true },
+          },
+        },
+        orderBy: { publishedAt: "desc" },
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      prisma.submission.count({ where }),
+    ]);
+  }
+
+  const pages = Math.ceil(total / limit);
+
   return (
     <div className="min-h-screen bg-white">
-      <header className="border-b">
+      <header className="border-b bg-navy-950">
         <div className="mx-auto max-w-5xl px-6 py-6">
-          <Link href="/" className="text-xl font-heading font-bold text-navy-950">Stanford Open Press</Link>
-          <form className="mt-4 flex gap-3" action="/search" method="GET">
-            <input
-              type="text" name="q" defaultValue={query} placeholder="Search articles, authors, keywords..."
-              className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
-              autoFocus
-            />
-            <select name="journal" defaultValue={journal || ""}
-              className="rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-brand-500 focus:outline-none">
-              <option value="">All Journals</option>
-              {journals.map((j) => <option key={j.slug} value={j.slug}>{j.name}</option>)}
-            </select>
-            <button type="submit" className="rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
-              Search
-            </button>
-          </form>
+          <Link href="/" className="text-xl font-heading font-bold text-white">
+            Stanford Open Press
+          </Link>
+          <h1 className="text-white/70 text-sm mt-1">Search Published Articles</h1>
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-6 py-8">
-        {query && (
-          <p className="text-sm text-gray-500 mb-6">
-            {total} result{total !== 1 ? "s" : ""} for &ldquo;{query}&rdquo;
-          </p>
-        )}
+      <main className="mx-auto max-w-5xl px-6 py-10">
+        <GlobalSearchForm
+          initialQuery={q || ""}
+          initialJournalId={journalId || ""}
+          journals={journals}
+        />
 
-        {results.length > 0 ? (
-          <div className="space-y-6">
-            {results.map((article: any) => (
-              <article key={article.id} className="border-b border-gray-100 pb-6">
-                <Link href={`/${article.journal.slug}/article/${article.id}`} className="group">
-                  <h2 className="text-lg font-heading font-semibold text-navy-950 group-hover:text-brand-500 transition-colors">
-                    {article.title}
-                  </h2>
-                </Link>
-                <p className="text-sm text-gray-500 mt-1">
-                  {article.authors.map((a: any) => `${a.givenName} ${a.familyName}`).join(", ")}
-                  {" \u2014 "}<span className="text-brand-500">{article.journal.name}</span>
-                </p>
-                {article.abstract && (
-                  <p className="text-sm text-gray-600 mt-2 line-clamp-2">{article.abstract}</p>
-                )}
-                {article.keywords.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {article.keywords.slice(0, 5).map((kw: string, i: number) => (
-                      <span key={i} className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-500">{kw}</span>
-                    ))}
-                  </div>
-                )}
-              </article>
-            ))}
-          </div>
-        ) : query ? (
-          <p className="text-gray-400 py-12 text-center">No articles found matching your search.</p>
-        ) : (
-          <p className="text-gray-400 py-12 text-center">Enter a search query to find published articles.</p>
-        )}
+        {q && (
+          <div className="mt-8">
+            <p className="text-sm text-gray-500 mb-4">
+              {total} result{total !== 1 ? "s" : ""} for &ldquo;{q}&rdquo;
+              {journalId && journals.find((j) => j.id === journalId)
+                ? ` in ${journals.find((j) => j.id === journalId)!.name}`
+                : " across all journals"}
+            </p>
 
-        {pages > 1 && (
-          <div className="flex justify-center gap-2 mt-8">
-            {Array.from({ length: pages }, (_, i) => i + 1).map((p) => (
-              <Link
-                key={p}
-                href={`/search?q=${encodeURIComponent(query)}${journal ? `&journal=${journal}` : ""}&page=${p}`}
-                className={`rounded-lg px-3 py-1.5 text-sm ${p === page ? "bg-brand-500 text-white" : "border text-gray-600 hover:bg-gray-50"}`}
-              >
-                {p}
-              </Link>
-            ))}
+            {results.length > 0 ? (
+              <div className="space-y-6">
+                {results.map((article: any) => (
+                  <article key={article.id} className="border-b border-gray-100 pb-6 last:border-0">
+                    <Link
+                      href={`/${article.journal.slug}/article/${article.id}`}
+                      className="group"
+                    >
+                      <h3 className="text-lg font-heading font-semibold text-navy-950 group-hover:text-brand-500 transition-colors">
+                        {article.title}
+                      </h3>
+                    </Link>
+                    <p className="text-sm text-gray-500 mt-1">
+                      {article.authors.map((a: any) => `${a.givenName} ${a.familyName}`).join(", ")}
+                      <span className="text-gray-300 mx-2">|</span>
+                      <Link href={`/${article.journal.slug}`} className="text-brand-500 hover:text-brand-700">
+                        {article.journal.name}
+                      </Link>
+                    </p>
+                    {article.abstract && (
+                      <p className="text-sm text-gray-600 mt-2 line-clamp-3 font-body">
+                        {article.abstract.slice(0, 300)}{article.abstract.length > 300 ? "..." : ""}
+                      </p>
+                    )}
+                    <div className="mt-2 flex gap-4 text-xs text-gray-400">
+                      {article.doi && <span>DOI: {article.doi}</span>}
+                      {article.publishedAt && (
+                        <span>{new Date(article.publishedAt).getFullYear()}</span>
+                      )}
+                      {article.volume && <span>Vol. {article.volume}</span>}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-400 py-8">No articles found.</p>
+            )}
+
+            {pages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-8">
+                {page > 1 && (
+                  <Link
+                    href={`/search?q=${encodeURIComponent(q)}${journalId ? `&journalId=${journalId}` : ""}&page=${page - 1}`}
+                    className="rounded-lg border px-3 py-1.5 text-sm hover:bg-gray-50"
+                  >
+                    Previous
+                  </Link>
+                )}
+                <span className="text-sm text-gray-500">Page {page} of {pages}</span>
+                {page < pages && (
+                  <Link
+                    href={`/search?q=${encodeURIComponent(q)}${journalId ? `&journalId=${journalId}` : ""}&page=${page + 1}`}
+                    className="rounded-lg border px-3 py-1.5 text-sm hover:bg-gray-50"
+                  >
+                    Next
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         )}
       </main>

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@stanford-press/database";
 import Link from "next/link";
 import { StatusBadge } from "@/components/status-badge";
+import { NotificationBell } from "@/components/notification-bell";
 
 export const metadata = { title: "Editorial Dashboard" };
 
@@ -119,7 +120,12 @@ export default async function EditorialDashboardPage({ params }: Params) {
             <span className="text-gray-300">/</span>
             <span className="text-sm font-medium text-gray-600">{journal.name}</span>
           </div>
-          <span className="text-sm text-gray-400">{session.user.name}</span>
+          <div className="flex items-center gap-3">
+            <NotificationBell />
+            <Link href="/profile" className="text-sm text-gray-400 hover:text-navy-950 transition-colors">
+              {session.user.name}
+            </Link>
+          </div>
         </div>
       </header>
 

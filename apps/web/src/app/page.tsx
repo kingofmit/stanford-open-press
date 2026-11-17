@@ -27,7 +27,7 @@ export default function HomePage() {
 
       <main>
         <section className="mx-auto max-w-4xl px-6 py-24 text-center">
-          <h1 className="text-5xl font-heading font-bold tracking-tight sm:text-6xl">
+          <h1 className="text-3xl font-heading font-bold tracking-tight sm:text-5xl lg:text-6xl">
             Scholarly publishing,{" "}
             <span className="text-brand-500">reimagined</span>
           </h1>

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@stanford-press/database";
 import Link from "next/link";
 import { StatusBadge } from "@/components/status-badge";
+import { NotificationBell } from "@/components/notification-bell";
 
 export const metadata = { title: "Dashboard" };
 
@@ -65,16 +66,19 @@ export default async function DashboardPage() {
           <Link href="/dashboard" className="text-lg font-heading font-bold text-navy-950">
             Stanford Open Press
           </Link>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {editorJournals.length > 0 && (
               <Link
                 href={`/editorial/${editorJournals[0].slug}`}
-                className="text-sm text-gray-500 hover:text-navy-950 transition-colors"
+                className="hidden text-sm text-gray-500 hover:text-navy-950 transition-colors sm:block"
               >
-                Editorial Dashboard
+                Editorial
               </Link>
             )}
-            <span className="text-sm text-gray-400">{user?.name}</span>
+            <NotificationBell />
+            <Link href="/profile" className="text-sm text-gray-400 hover:text-navy-950 transition-colors">
+              {user?.name}
+            </Link>
           </div>
         </div>
       </header>

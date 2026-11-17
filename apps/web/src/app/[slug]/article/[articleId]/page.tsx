@@ -142,7 +142,7 @@ export default async function ArticlePage({ params }: Params) {
               Download PDF
             </a>
           )}
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {(["bibtex", "ris", "apa", "mla", "chicago"] as const).map((fmt) => (
               <a
                 key={fmt}
