@@ -1,0 +1,16 @@
+node_modules
+.next
+.turbo
+dist
+coverage
+.env
+.env.local
+.env.production
+.git
+.github
+.vscode
+.idea
+.claude
+.codeagento
+*.md
+!README.md
