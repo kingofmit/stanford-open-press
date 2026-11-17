@@ -1,0 +1,44 @@
+{
+  "name": "create-stanford-press",
+  "version": "0.1.0",
+  "description": "Create a Stanford Open Press scholarly publishing platform",
+  "license": "MIT",
+  "author": "Ahmed Allem",
+  "bin": {
+    "create-stanford-press": "./dist/index.js"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "prompts": "^2.4.2",
+    "picocolors": "^1.1.0",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/prompts": "^2.4.9",
+    "@types/node": "^22.0.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kingofmit/stanford-open-press.git",
+    "directory": "packages/create-stanford-press"
+  },
+  "keywords": [
+    "stanford-open-press",
+    "scholarly-publishing",
+    "journal",
+    "create",
+    "cli",
+    "scaffold"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
