@@ -41,3 +41,10 @@ pnpm-debug.log*
 
 # Codeagento
 .codeagento/
+
+# AI tool files (auto-generated, must not be committed)
+AGENTS.md
+.cursorrules
+.aider*
+.copilot/
+.continue/
