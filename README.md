@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/StanfordOpenPress.png" alt="Stanford Open Press" />
+  <strong>Stanford Open Press</strong>
 </p>
 
 <p align="center">
